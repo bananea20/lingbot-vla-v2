@@ -201,9 +201,10 @@ Using `deploy.lingbot_vla_v2_policy`, one inference call on an NVIDIA GeForce RT
 
 ## Performance
 
+### Real-world Benchmarks
 LingBot-VLA 2.0 is evaluated in a generalist setting on GM-100 bimanual manipulation and long-horizon mobile manipulation. Metrics are reported as progress score / success rate where applicable.
 
-### GM-100 Bimanual Manipulation
+#### GM-100 Bimanual Manipulation
 
 | Platform | GR00T N1.7 | π<sub>0.5 | LingBot-VLA-1.0 | LingBot-VLA 2.0 |
 | :--- | ---: | ---: | ---: | ---: |
@@ -214,7 +215,7 @@ LingBot-VLA 2.0 is evaluated in a generalist setting on GM-100 bimanual manipula
   <img src="assets/lingbot_vla2_gm100_ablation_barplot.png" width="75%">
 </p>
 
-### Long-Horizon Mobile Manipulation
+#### Long-Horizon Mobile Manipulation
 
 | Embodiment | Task | Setting | LingBot-VLA 2.0 | π<sub>0.5 |
 | :--- | :--- | :--- | ---: | ---: |
@@ -222,6 +223,16 @@ LingBot-VLA 2.0 is evaluated in a generalist setting on GM-100 bimanual manipula
 | Astribot S1 | Refrigerator sorting | Out-of-domain | **37.0 / 13.3** | 30.3 / 6.7 |
 | Cobot Magic-ARX X5 | Stove cleaning | In-domain | **84.3 / 66.7** | 79.9 / 60.0 |
 | Cobot Magic-ARX X5 | Stove cleaning | Out-of-domain | **67.5 / 40.0** | 62.5 / 33.3 |
+
+
+### Simulation Benchmark
+#### RoboTwin 2.0
+
+| Task | π<sub>0.5 | LingBot-VLA-1.0  | LingBot-VLA 2.0 |
+| :--- | :---: | :---: | :---: | 
+| Clean | 82.74%  | 88.56% | **93.52%** |
+| Randomized | 76.76%  | 86.68% | **92.80%** |
+
 
 ## Citation
 
