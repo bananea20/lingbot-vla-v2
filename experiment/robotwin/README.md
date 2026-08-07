@@ -93,3 +93,108 @@ Output:
 ```
 ${XDG_CACHE_HOME}/huggingface/lerobot/${repo_id}
 ```
+
+---
+
+## 7. Simulated Evaluation (Inference + RoboTwin Sim)
+
+After training, evaluate your checkpoint on the 50 RoboTwin tasks (100 episodes each) with
+[`start_robotwin_infer_and_eval.sh`](./start_robotwin_infer_and_eval.sh). It starts
+`num_gpus * num_per_gpu` resident inference servers (one port each), then runs the sim tasks
+in a **queue-scheduled** fashion against free slots — finishing a task frees its slot and
+starts the next. All flags below also accept the equivalent environment variable
+(`MODEL_PATH`, `EVAL_WORKDIR`, `OUTPUT_BASE`, `CONDA_SH`, `QWEN3VL_PATH`, `INFERENCE_ENV`, `SIM_ENV`).
+
+### Prerequisites
+
+1. **RoboTwin repo** cloned and its dependencies installed (steps 1–2 above). The launcher
+   needs the repo **root** path (the one containing `envs/`, `assets/`, `task_config/`, `script/`).
+2. **Two conda environments**:
+   - inference side — e.g. `lingbotvla` (PyTorch + this repo's model code).
+   - sim side — `RoboTwin` (sapien / mplib / curobo / open3d …), built against numpy 1.26.x.
+3. **Qwen3-VL backbone** checkpoint used by the VLA vision-language encoder (`QWEN3VL_PATH`).
+4. **Your trained HF checkpoint** (`model_path`), e.g. `.../global_step_xxxxx/hf_ckpt`.
+
+> The launcher **auto-copies** the eval client (`eval_policy_client_lingbotvla.py` + the small
+> `deploy/` helpers) from this repo into `<RoboTwin>/script/`, and **self-heals** the curobo
+> embodiment `.yml` and editable-install `.pth` paths to point at the RoboTwin checkout you
+> pass. No manual path setup is needed when relocating RoboTwin.
+
+### Run the full benchmark (50 tasks)
+
+> Substitute every `/path/to/...` and the conda env / `conda.sh` path for your machine.
+
+```bash
+# from this repo's root (so inference_workdir = current working dir)
+bash experiment/robotwin/start_robotwin_infer_and_eval.sh \
+    --model_path     /path/to/your/checkpoint/hf_ckpt \
+    --eval_workdir   /path/to/RoboTwin \
+    --output_base    /path/to/VLABenchmarkResult \
+    --conda_sh       /path/to/miniconda3/etc/profile.d/conda.sh \
+    --inference_env  lingbotvla \
+    --sim_env        RoboTwin \
+    --num_tasks 50 --num_gpus 4 --num_per_gpu 1
+```
+
+**GPU / concurrency**
+- `num_gpus` × `num_per_gpu` = number of concurrent sim slots (one inference server per slot).
+- `--num_per_gpu 1` is the **safe** default: one ~12.6 GB Qwen3-VL server + one sim per 32 GB card.
+- `--num_per_gpu 2` roughly halves wall-clock but is memory-tight and can OOM on 32 GB cards
+  (the script retries each task up to 3 times, but persistent OOM skips the task).
+
+### Smoke test (1 task, 1 GPU)
+
+Verify the pipeline end-to-end without waiting for the full run:
+
+```bash
+bash experiment/robotwin/start_robotwin_infer_and_eval.sh \
+    --model_path   /path/to/your/checkpoint/hf_ckpt \
+    --eval_workdir /path/to/RoboTwin \
+    --conda_sh     /path/to/miniconda3/etc/profile.d/conda.sh \
+    --num_tasks 1 --num_gpus 1 --num_per_gpu 1
+```
+
+The run dir is printed at startup (`Run directory: ...`). You should see `Success rate: N/N =>
+...` lines appear in the task log. Each task evaluates **100 episodes**, so even a
+single-task smoke takes tens of minutes — kill it once you've seen successes, then launch
+the full run.
+
+### Output layout
+
+```
+<output_base>/<exp>_<step>k_<timestamp>/
+├── stats.txt                 # final per-task table + overall success rate
+├── inference_logs/           # one log per inference server / port
+├── eval_logs/                # one log per task (per-step progress, success rate)
+└── eval_results/             # per-task videos: episodeN_success.mp4 ...
+```
+
+### Useful flags
+
+| flag | meaning |
+|------|---------|
+| `--no_video` | disable per-episode video recording (faster, no videos saved) |
+| `--keep_inference` | leave inference servers resident after sim finishes |
+| `--start_port` | base port for inference servers (default 9330, slot *i* uses base + i) |
+| `--use_length` | action-chunk length forwarded to the policy (default 50) |
+| `--robo_name` | robot config name (default `robotwin`) |
+| `--inference_script` | inference-side module (default `deploy/lingbot_vla_v2_policy.py`) |
+
+### Monitor / stop
+
+```bash
+RUN=/path/to/VLABenchmarkResult/<exp>_<step>k_<timestamp>
+
+# overall progress (done/skip/fail summary)
+sed 's/\x1b\[[0-9;]*m//g' $RUN/eval_logs/*.log | grep -E "Success rate" | tail
+
+# per-task latest success rate
+for f in $RUN/eval_logs/*.log; do
+  printf "%-24s %s\n" "$(basename $f .log)" \
+    "$(grep -aoE 'Success rate: [0-9]+/[0-9]+ => [0-9.]+%' "$f" | tail -1)"
+done
+```
+
+Stop everything with `Ctrl-C` (the launcher traps it and kills all child processes), or kill
+the launcher plus any lingering `deploy.lingbot_vla_v2_policy` / `eval_policy_client_lingbotvla.py`
+processes.

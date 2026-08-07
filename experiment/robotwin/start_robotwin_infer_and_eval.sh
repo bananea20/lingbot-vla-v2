@@ -4,68 +4,93 @@
 # num_per_gpu inference servers stay resident per GPU; sim tasks match
 # inference slots from a queue. Finishing a task frees its slot and starts the next.
 #
-# Usage: bash start_inference_and_eval.sh [options]
-#   --model_path        inference model path (default: <path/to/your/checkpoint>)
+# Usage: bash start_robotwin_infer_and_eval.sh [options]
+#   --model_path        inference model path (default: /path/to/your/checkpoint, or $MODEL_PATH)
 #   --inference_script  inference-side module path (default: deploy/lingbot_vla_v2_policy.py)
 #   --inference_workdir inference-side working dir (default: current working dir)
+#   --eval_workdir      sim-side (RoboTwin repo) working dir (REQUIRED; or $EVAL_WORKDIR; default placeholder /path/to/RoboTwin)
+#   --inference_env     inference-side conda env (default: lingbotvla_open_test, or $INFERENCE_ENV)
+#   --sim_env           sim-side conda env (default: robotwinTest, or $SIM_ENV)
+#   --conda_sh          conda.sh path to source (default: /path/to/miniconda3/etc/profile.d/conda.sh, or $CONDA_SH)
+#   --output_base       result output path (default: /path/to/VLABenchmarkResult, or $OUTPUT_BASE)
 #   --start_port        starting port (default: 9330)
 #   --pid_name          PID file prefix (default: test_pid)
 #   --num_tasks         number of sim tasks, taken in order from the task list (default: 50, max: 50)
-#   --num_gpus          total GPUs (default: 8)
-#   --num_per_gpu       inference servers per GPU (default: 3, i.e. 8*3=24 slots)
+#   --num_gpus          total GPUs (default: 1)
+#   --num_per_gpu       inference servers per GPU (default: 1)
 #   --use_length        chunk length (default: 50)
+#   --robo_name         robot config name (default: robotwin)
+#   --video_fps         video recording fps (default: 10)
+#   --no_video          disable video recording to speed up simulation
 #   --keep_inference    keep inference servers resident after simulation
 #
 # Examples:
-#   bash start_inference_and_eval.sh --num_tasks 50
-#   bash start_inference_and_eval.sh --num_tasks 20 --num_per_gpu 2
+#   bash start_robotwin_infer_and_eval.sh --eval_workdir /path/to/RoboTwin --num_tasks 50 --num_gpus 4 --num_per_gpu 1
+#   bash start_robotwin_infer_and_eval.sh --eval_workdir /path/to/RoboTwin --sim_env RoboTwin --num_tasks 20 --num_per_gpu 2
 # ============================================================
 
 # ===== Parse keyword arguments =====
+export QWEN3VL_PATH="${QWEN3VL_PATH:-/path/to/your/checkpoints/Qwen3-VL-4B-Instruct}"
+
 project_root="$(pwd)"
 inference_workdir="${project_root}/"
 inference_script="deploy/lingbot_vla_v2_policy.py"
-# Override MODEL_PATH / OUTPUT_BASE / QWEN3VL_PATH / EVAL_WORKDIR via env or flags.
 model_path="${MODEL_PATH:-/path/to/your/checkpoint}"
-output_base="${OUTPUT_BASE:-/path/to/your/eval_output}"
+eval_workdir="${EVAL_WORKDIR:-/path/to/RoboTwin}"
+output_base="${OUTPUT_BASE:-/path/to/VLABenchmarkResult}"
+# Conda env names + conda.sh path for both sides (overridable via flags or env).
+inference_env="${INFERENCE_ENV:-lingbotvla}"
+sim_env="${SIM_ENV:-RoboTwin}"
+conda_sh="${CONDA_SH:-/path/to/miniconda3/etc/profile.d/conda.sh}"
 start_port=9330
 pid_name="test_pid"
 num_tasks=50
-num_gpus=8
-num_per_gpu=3
+num_gpus=1
+num_per_gpu=1
 use_length=50
 robo_name="robotwin"
 video_fps=10
-enable_video=False
+enable_video=True
+keep_inference=false
 
 while [[ $# -gt 0 ]]; do
     case $1 in
-        --model_path)      model_path="$2";      shift 2 ;;
-        --inference_script) inference_script="$2"; shift 2 ;;
         --inference_workdir) inference_workdir="$2"; shift 2 ;;
-        --output_base)     output_base="$2";     shift 2 ;;
-        --start_port)      start_port="$2";      shift 2 ;;
-        --pid_name)        pid_name="$2";        shift 2 ;;
-        --num_tasks)       num_tasks="$2";       shift 2 ;;
-        --num_gpus)        num_gpus="$2";        shift 2 ;;
-        --num_per_gpu)     num_per_gpu="$2";     shift 2 ;;
-        --use_length)      use_length="$2";      shift 2 ;;
-        --robo_name)       robo_name="$2";       shift 2 ;;
-        --video_fps)       video_fps="$2";       shift 2 ;;
-        --no_video)        enable_video=False;   shift ;;
+        --inference_script)  inference_script="$2";  shift 2 ;;
+        --model_path)        model_path="$2";        shift 2 ;;
+        --eval_workdir)      eval_workdir="$2";      shift 2 ;;
+        --output_base)       output_base="$2";       shift 2 ;;
+        --start_port)        start_port="$2";        shift 2 ;;
+        --pid_name)          pid_name="$2";          shift 2 ;;
+        --num_tasks)         num_tasks="$2";         shift 2 ;;
+        --num_gpus)          num_gpus="$2";          shift 2 ;;
+        --num_per_gpu)       num_per_gpu="$2";       shift 2 ;;
+        --use_length)        use_length="$2";        shift 2 ;;
+        --robo_name)         robo_name="$2";         shift 2 ;;
+        --video_fps)         video_fps="$2";         shift 2 ;;
+        --no_video)          enable_video=False;     shift ;;
+        --keep_inference)    keep_inference=true;    shift ;;
+        --inference_env)     inference_env="$2";     shift 2 ;;
+        --sim_env)           sim_env="$2";           shift 2 ;;
+        --conda_sh)          conda_sh="$2";          shift 2 ;;
         -h|--help)
             echo "Usage: bash $0 [options]"
             echo "  --model_path        inference model path"
             echo "  --inference_script  inference-side module path"
             echo "  --inference_workdir inference-side working dir"
+            echo "  --eval_workdir      sim-side (RoboTwin repo) working dir (REQUIRED; or \$EVAL_WORKDIR)"
+            echo "  --inference_env     inference-side conda env (default: lingbotvla, or \$INFERENCE_ENV)"
+            echo "  --sim_env           sim-side conda env (default: RoboTwin, or \$SIM_ENV)"
+            echo "  --conda_sh          conda.sh path to source (default: /path/to/miniconda3/etc/profile.d/conda.sh, or \$CONDA_SH)"
             echo "  --output_base       result output path"
             echo "  --start_port        starting port (default: 9330)"
             echo "  --pid_name          PID file prefix (default: test_pid)"
             echo "  --num_tasks         number of sim tasks (default: 50, max: 50)"
-            echo "  --num_gpus          total GPUs (default: 8)"
-            echo "  --num_per_gpu       inference servers per GPU (default: 3)"
+            echo "  --num_gpus          total GPUs (default: 1)"
+            echo "  --num_per_gpu       inference servers per GPU (default: 1)"
             echo "  --use_length        chunk length (default: 50)"
-            echo "  --robo_name         robot config name (default: robotwin_clean_and_aug)"
+            echo "  --robo_name         robot config name (default: robotwin)"
+            echo "  --keep_inference    keep inference servers resident after simulation"
             echo "  --video_fps         video recording fps (default: 10)"
             echo "  --no_video          disable video recording to speed up simulation"
             exit 0 ;;
@@ -74,21 +99,6 @@ while [[ $# -gt 0 ]]; do
     esac
 done
 
-# ===== Fix Vulkan ICD (required by Sapien rendering) =====
-# nvidia_icd="/etc/vulkan/icd.d/nvidia_icd.json"
-# echo -e "\033[33mWriting NVIDIA Vulkan ICD config: ${nvidia_icd}\033[0m"
-# mkdir -p "$(dirname "$nvidia_icd")"
-# cat > "$nvidia_icd" << 'VULKAN_EOF'
-# {
-#     "file_format_version" : "1.0.0",
-#     "ICD": {
-#         "library_path": "/usr/lib/x86_64-linux-gnu/libGLX_nvidia.so.0",
-#         "api_version" : "1.3"
-#     }
-# }
-# VULKAN_EOF
-# export VK_ICD_FILENAMES="$nvidia_icd"
-# export __EGL_VENDOR_LIBRARY_FILENAMES="/usr/share/glvnd/egl_vendor.d/10_nvidia.json"
 
 # ===== Common environment =====
 # Cleanup: kill all child processes on exit / Ctrl-C / kill
@@ -125,18 +135,45 @@ cleanup() {
 }
 trap cleanup EXIT INT TERM
 
-export QWEN3VL_PATH="${QWEN3VL_PATH:-/path/to/your/checkpoints/Qwen3-VL-4B-Instruct}"
 
-# ===== Working dir =====
-eval_workdir="${EVAL_WORKDIR:-/path/to/Robotwin}"
 
-# ===== Sim-side python =====
-# The sim side runs with the current shell's Python environment.
-if ! command -v python >/dev/null 2>&1; then
-    echo -e "\033[31mError: python command not found for sim side\033[0m"
+# ===== Working dir (RoboTwin sim side) -- REQUIRED =====
+# Must be supplied via --eval_workdir flag or $EVAL_WORKDIR env. No default.
+if [ -z "$eval_workdir" ]; then
+    eval_workdir="${EVAL_WORKDIR:-}"
+fi
+if [ -z "$eval_workdir" ]; then
+    echo -e "\033[31mError: --eval_workdir (or \$EVAL_WORKDIR) is required (the RoboTwin repo root).\033[0m"
     exit 1
 fi
-echo -e "\033[36mSim-side python: $(command -v python) ($(python --version 2>&1))\033[0m"
+if [ ! -d "$eval_workdir" ]; then
+    echo -e "\033[31mError: sim workdir '${eval_workdir}' not found.\033[0m"
+    echo "  Pass --eval_workdir <path> or set EVAL_WORKDIR=<path> (the RoboTwin repo root)."
+    exit 1
+fi
+echo -e "\033[36mSim workdir: ${eval_workdir}\033[0m"
+
+# ===== Sim-side python (conda env: ${sim_env}) =====
+# conda_sh / sim_env / inference_env are resolved above (flag > env > builtin default).
+if [ ! -f "$conda_sh" ]; then
+    echo -e "\033[31mError: conda profile not found at ${conda_sh}\033[0m"
+    exit 1
+fi
+# shellcheck disable=SC1090
+source "$conda_sh"
+if ! conda activate "$sim_env" 2>/dev/null; then
+    echo -e "\033[31mError: conda env '${sim_env}' not found; create it first\033[0m"
+    exit 1
+fi
+if ! command -v python >/dev/null 2>&1; then
+    echo -e "\033[31mError: python command not found in conda env '${sim_env}'\033[0m"
+    exit 1
+fi
+sim_python="$(command -v python)"
+echo -e "\033[36mSim-side python (${sim_env}): ${sim_python} ($(${sim_python} --version 2>&1))\033[0m"
+# Deactivate so later phases don't inherit sim env; the actual sim launch
+# activates ${sim_env} itself via `setsid bash -c`.
+conda deactivate 2>/dev/null || true
 
 # ===== Task count validation =====
 if [ "$num_tasks" -gt 50 ]; then
@@ -216,10 +253,10 @@ for slot in $(seq 0 $((num_slots-1))); do
         inference_script_for_module="${inference_script_for_module#${inference_workdir%/}/}"
     fi
     inference_module=$(echo "${inference_script_for_module}" | sed 's|/|.|g; s|\.py$||')
-    setsid python -m ${inference_module} \
-        --model_path "${model_path}" \
-        --use_length "${use_length}" \
-        --port "${port}" > "$log_file" 2>&1 &
+    setsid bash -c "source ${conda_sh} && conda activate ${inference_env} && SETUPTOOLS_SCM_PRETEND_VERSION=0.0.0 python -m ${inference_module} \
+        --model_path '${model_path}' \
+        --use_length '${use_length}' \
+        --port '${port}'" > "$log_file" 2>&1 &
 
     pid=$!
     echo "${pid}" >> "$inference_pid_file"
@@ -247,6 +284,64 @@ active_inference=$num_slots
 echo -e "\033[32m========== Starting sim side (queue-scheduled, ${num_slots} concurrent slots) ==========\033[0m"
 
 cd "$eval_workdir" || { echo -e "\033[31mError: sim workdir ${eval_workdir} missing\033[0m"; exit 1; }
+
+# ===== Ensure the lingbot eval client is present under RoboTwin/script =====
+# The eval client resolves its ../task_config relative to its own location, so it
+# must live at <RoboTwin>/script/ for _camera_config.yml to be found.
+eval_client_src="${inference_workdir}experiment/robotwin/eval_policy_client_lingbotvla.py"
+eval_client_dst="${eval_workdir}/script/eval_policy_client_lingbotvla.py"
+if [ ! -f "$eval_client_dst" ]; then
+    if [ ! -f "$eval_client_src" ]; then
+        echo -e "\033[31mError: eval client source not found: ${eval_client_src}\033[0m"
+        exit 1
+    fi
+    echo -e "\033[36mCopying eval client -> ${eval_client_dst}\033[0m"
+    cp "$eval_client_src" "$eval_client_dst"
+fi
+
+# ===== Ensure the deploy client helpers are present under RoboTwin/script/deploy =====
+# The eval client does `from script.deploy.websocket_client_policy import WebsocketClientPolicy`,
+# which pulls in a sibling msgpack_numpy. Copy any that are missing from the inference repo.
+deploy_pkg_src="${inference_workdir}deploy"
+deploy_pkg_dst="${eval_workdir}/script/deploy"
+mkdir -p "$deploy_pkg_dst"
+for f in __init__.py websocket_client_policy.py msgpack_numpy.py; do
+    if [ ! -f "$deploy_pkg_dst/$f" ]; then
+        if [ ! -f "$deploy_pkg_src/$f" ]; then
+            echo -e "\033[31mError: deploy helper source not found: ${deploy_pkg_src}/${f}\033[0m"
+            exit 1
+        fi
+        echo -e "\033[36mCopying deploy helper -> ${deploy_pkg_dst}/${f}\033[0m"
+        cp "$deploy_pkg_src/$f" "$deploy_pkg_dst/$f"
+    fi
+done
+
+# ===== Ensure curobo absolute paths point at this RoboTwin checkout =====
+# Two artifacts embed absolute paths and go stale when RoboTwin is moved to a
+# new directory (both would break the curobo planner at sim start):
+#   (1) assets/embodiments/*/curobo*.yml -- urdf_path / collision_spheres
+#       (regenerated from *_tmp.yml templates via script/update_embodiment_config_path.py)
+#   (2) the editable-install .pth in the RoboTwin conda env pointing at envs/curobo/src
+# Both checks are idempotent: only act when the embedded path != current location.
+_eval_resolved="$(pwd -P)"   # physical path of this RoboTwin checkout (after cd)
+_rep_yml="assets/embodiments/aloha-agilex/curobo_left.yml"
+if [ -f "$_rep_yml" ] && ! grep -qF "${_eval_resolved}/assets" "$_rep_yml" 2>/dev/null; then
+    echo -e "\033[36mCurobo yml paths stale -> regenerating for ${_eval_resolved}\033[0m"
+    ( source ${conda_sh} && conda activate ${sim_env} \
+      && python script/update_embodiment_config_path.py ) \
+      || { echo -e "\033[31mError: curobo path regeneration failed\033[0m"; exit 1; }
+fi
+_env_site="$( source ${conda_sh} && conda activate ${sim_env} \
+    && python -c 'import site;print(site.getsitepackages()[0])' )"
+_curobo_pth="$(echo "${_env_site}"/__editable__.nvidia_curobo-*.pth)"
+_expected_curobo_src="${_eval_resolved}/envs/curobo/src"
+if [ -f "$_curobo_pth" ]; then
+    _cur_curobo_src="$(grep -v '^[[:space:]]*#' "$_curobo_pth" | head -1)"
+    if [ "$_cur_curobo_src" != "$_expected_curobo_src" ]; then
+        echo -e "\033[36mCurobo editable .pth stale (${_cur_curobo_src}) -> ${_expected_curobo_src}\033[0m"
+        echo "$_expected_curobo_src" > "$_curobo_pth"
+    fi
+fi
 
 total_start_time=$(date +%s)
 
@@ -297,11 +392,16 @@ launch_task() {
         echo "================================================================"
     } >> "$log_file"
 
+    # Prepend the RoboTwin env's site-packages to PYTHONPATH (set inside the
+    # bash -c after `conda activate`) so the env's numpy 1.26.4 -- which mplib /
+    # sapien / open3d were compiled against -- is used instead of ~/.local's
+    # numpy 2.x. The user-site numpy 2.x otherwise shadows it and segfaults
+    # mplib's convert_physx_component during planner init.
     PYTHONUNBUFFERED=1 \
     PYTHONWARNINGS=ignore::UserWarning \
     XLA_PYTHON_CLIENT_MEM_FRACTION=0.9 \
     SETUPTOOLS_SCM_PRETEND_VERSION=0.0.0 \
-    setsid python -u script/eval_polict_client_openpi.py --config policy/$policy_name/deploy_policy.yml \
+    setsid bash -c "source ${conda_sh} && conda activate ${sim_env} && export PYTHONPATH=\"\$(python -c 'import site;print(site.getsitepackages()[0])')\${PYTHONPATH:+:\$PYTHONPATH}\" && PYTHONUNBUFFERED=1 PYTHONWARNINGS=ignore::UserWarning XLA_PYTHON_CLIENT_MEM_FRACTION=0.9 SETUPTOOLS_SCM_PRETEND_VERSION=0.0.0 python -u ${eval_client_dst} --config policy/${policy_name}/deploy_policy.yml \
         --overrides \
         --task_name ${task_name} \
         --task_config ${task_config} \
@@ -312,7 +412,7 @@ launch_task() {
         --robo_name ${robo_name} \
         --video_fps ${video_fps} \
         --eval_video_log ${enable_video} \
-        --output_dir "${run_dir}/eval_results" >> "$log_file" 2>&1 &
+        --output_dir '${run_dir}/eval_results'" >> "$log_file" 2>&1 &
 
     local pid=$!
     echo "${pid}" >> "$eval_pid_file"
