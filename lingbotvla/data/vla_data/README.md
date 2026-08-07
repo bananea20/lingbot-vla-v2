@@ -37,7 +37,6 @@ data:
     - camera_top
     - camera_wrist_left
     - camera_wrist_right
-  prompt_type: global
 ```
 
 ### Multiple Datasets
@@ -74,7 +73,6 @@ data:
     - camera_top
     - camera_wrist_left
     - camera_wrist_right
-  prompt_type: global
 ```
 
 `MultiVLADataset` will instantiate one `VLADataset` per line and concatenate them at runtime. This replaces the old "merge datasets first" workflow.
@@ -212,7 +210,6 @@ data:
     - camera_top
     - camera_wrist_left
     - camera_wrist_right
-  prompt_type: global
 ```
 
 Rules:
@@ -239,40 +236,27 @@ Use the robot training config directly. No merge or format-conversion step is re
 For a single LeRobot dataset directory, set `data.data_name` to the robot config name and pass the dataset directory as `data.train_path`:
 
 ```bash
-CUDA_VISIBLE_DEVICES=0 bash train.sh scripts/compute_norm_stats.py ./configs/vla/robotwin/robotwin.yaml \
-  --data.data_name robotwin \
+bash train.sh scripts/compute_norm_stats.py ./configs/vla/norm_compute/post_data.yaml \
+  --data.data_name robot_config_name \
   --data.train_path /path/to/lerobot_dataset \
-  --data.robot_config_root ./configs/robot_configs \
-  --data.norm_path assets/norm_stats/robotwin.json \
-  --data.data_ratio_for_norm_compute 1
+  --data.norm_path assets/norm_stats/norm.json
 ```
 
 For example:
 
 ```bash
-CUDA_VISIBLE_DEVICES=0 bash train.sh scripts/compute_norm_stats.py ./configs/vla/robotwin/robotwin.yaml \
+bash train.sh scripts/compute_norm_stats.py ./configs/vla/norm_compute/post_data.yaml \
   --data.data_name robotwin \
   --data.train_path /path/to/beat_block_hammer-aloha-agilex_randomized_500-1000/ \
-  --data.robot_config_root ./configs/robot_configs \
-  --data.norm_path debug.json \
-  --data.data_ratio_for_norm_compute 1
+  --data.norm_path assets/norm_stats/norm.json
 ```
 
-For a multi-dataset list, keep `data.data_name: multi` and pass the list file as `data.train_path`:
-
+For a multi-dataset list, keep `data.data_name: multi`, set `data.robot_name` to the robot config name, and pass the list file as `data.train_path`. Only data whose robot config name matches data.robot_name will be used to compute the normalization statistics. For example:
 ```bash
-CUDA_VISIBLE_DEVICES=0 bash train.sh scripts/compute_norm_stats.py ./configs/vla/robotwin/robotwin.yaml \
-  --data.data_name multi \
+bash train.sh scripts/compute_norm_stats.py ./configs/vla/norm_compute/post_data.yaml \
+  --data.robot_name robotwin \
   --data.train_path assets/training_data/robotwin.txt \
-  --data.robot_config_root ./configs/robot_configs \
-  --data.norm_path assets/norm_stats/robotwin.json \
-  --data.data_ratio_for_norm_compute 1
-```
-
-Optional: compute stats for only selected robot config names in the list:
-
-```bash
---data.robot_name robotwin
+  --data.norm_path assets/norm_stats/robotwin.json
 ```
 
 The output JSON should match the `norm_stats` path in `configs/robot_configs/robotwin.yaml`.

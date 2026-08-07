@@ -22,6 +22,9 @@
 #   --robo_name         robot config name (default: robotwin)
 #   --video_fps         video recording fps (default: 10)
 #   --no_video          disable video recording to speed up simulation
+#   --use_bf16          use bfloat16 inference (default: True)
+#   --use_fp32          use float32 inference (default: False)
+#   --use_compile       enable model compile in policy inference (default: True)
 #   --keep_inference    keep inference servers resident after simulation
 #
 # Examples:
@@ -48,10 +51,15 @@ num_tasks=50
 num_gpus=1
 num_per_gpu=1
 use_length=50
+use_bf16=True
+use_fp32=False
+use_compile=True
 robo_name="robotwin"
 video_fps=10
 enable_video=True
 keep_inference=false
+enable_video=False
+task_config="demo_clean"
 
 while [[ $# -gt 0 ]]; do
     case $1 in
@@ -66,6 +74,8 @@ while [[ $# -gt 0 ]]; do
         --num_gpus)          num_gpus="$2";          shift 2 ;;
         --num_per_gpu)       num_per_gpu="$2";       shift 2 ;;
         --use_length)        use_length="$2";        shift 2 ;;
+        --use_bf16)          use_bf16="$2";        shift 2 ;;
+        --use_fp32)          use_fp32="$2";        shift 2 ;;
         --robo_name)         robo_name="$2";         shift 2 ;;
         --video_fps)         video_fps="$2";         shift 2 ;;
         --no_video)          enable_video=False;     shift ;;
@@ -89,6 +99,8 @@ while [[ $# -gt 0 ]]; do
             echo "  --num_gpus          total GPUs (default: 1)"
             echo "  --num_per_gpu       inference servers per GPU (default: 1)"
             echo "  --use_length        chunk length (default: 50)"
+            echo "  --use_bf16          use bfloat16 inference (default: True)"
+            echo "  --use_fp32          use float32 inference (default: False)"
             echo "  --robo_name         robot config name (default: robotwin)"
             echo "  --keep_inference    keep inference servers resident after simulation"
             echo "  --video_fps         video recording fps (default: 10)"
@@ -183,7 +195,6 @@ fi
 
 # ===== Sim-side args =====
 policy_name=ACT
-task_config=demo_clean # demo_randomized
 train_config_name=0
 seed=0
 
@@ -214,7 +225,7 @@ batch_time=$(date +%Y%m%d_%H%M%S)
 _exp_name=$(echo "$model_path" | grep -oP '[^/]+(?=/checkpoints)')
 _step_num=$(echo "$model_path" | grep -oP 'global_step_\K\d+')
 _step_k=$(( _step_num / 1000 ))k
-run_dir="${output_base}/${_exp_name}_${_step_k}_${batch_time}"
+run_dir="${output_base}/${_exp_name}_${_step_k}_${task_config}_${batch_time}"
 mkdir -p "${run_dir}/inference_logs" "${run_dir}/eval_logs"
 log_dir="${run_dir}"
 inference_pid_file="${run_dir}/inference_pids.txt"
@@ -256,6 +267,8 @@ for slot in $(seq 0 $((num_slots-1))); do
     setsid bash -c "source ${conda_sh} && conda activate ${inference_env} && SETUPTOOLS_SCM_PRETEND_VERSION=0.0.0 python -m ${inference_module} \
         --model_path '${model_path}' \
         --use_length '${use_length}' \
+        --use_bf16 "${use_bf16}" \
+        --use_fp32 "${use_fp32}" \
         --port '${port}'" > "$log_file" 2>&1 &
 
     pid=$!
@@ -564,6 +577,7 @@ echo -e "\033[36mGenerating stats file: ${stats_file}\033[0m"
     echo "  Model: ${_exp_name}_${_step_k}"
     echo "  Model path: ${model_path}"
     echo "  Tasks: ${num_tasks}"
+    echo "  Task Config: ${task_config}"
     echo "  Inference: ${num_gpus} GPU x ${num_per_gpu}/GPU = ${num_slots} slots"
     echo "  Result: ${completed} done, ${skipped} skipped"
     echo "============================================"
