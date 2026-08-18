@@ -560,12 +560,21 @@ def main():
 
     if args.train.global_rank == 0:
         log_dir=f"{args.train.output_dir}/runs/"
-        writer = AsyncTBWriter(log_dir=log_dir)
         if args.train.use_wandb:
+            # Deliberately NOT using sync_tensorboard: that works by patching
+            # torch.utils.tensorboard at init time, so a SummaryWriter created
+            # earlier is never hooked and no history records are produced. It
+            # also conflicts with the explicit wandb.log(..., step=...) below
+            # ("Step cannot be set when using tensorboard syncing"). Metrics
+            # reach wandb through that explicit batched log call instead.
             wandb.init(
+                project=args.train.wandb_project,
                 name=args.train.wandb_name,
                 config={**vars(args.model), **vars(args.data), **vars(args.train)},  # flatten dict
             )
+        # Constructed after wandb.init so ordering stays correct if TB syncing
+        # is ever re-enabled.
+        writer = AsyncTBWriter(log_dir=log_dir)
 
         if args.train.enable_profiling:
             profiler = helper.create_profiler(
@@ -930,6 +939,19 @@ def main():
 
 
             if args.train.global_rank == 0:
+                # Mirror of everything handed to writer.add_scalar() below. TensorBoard's
+                # add_scalar() alone does not reach wandb reliably (sync_tensorboard is
+                # lossy here), so we collect the same scalars and push them with one
+                # explicit batched wandb.log() at the end of this block.
+                wandb_metrics = {
+                    "training/loss": total_loss,
+                    "training/vla_loss": total_vla_loss,
+                    "training/depth_loss": total_depth_loss,
+                    "training/future_depth_loss": total_future_depth_loss,
+                    "training/future_video_loss": total_future_video_loss,
+                    "training/sequence_wise_loss": total_seq_wise_loss,
+                    "training/router_z_loss": total_router_z_loss,
+                }
                 writer.add_scalar("training/loss", total_loss, global_step)
                 writer.add_scalar("training/vla_loss", total_vla_loss, global_step)
                 writer.add_scalar("training/depth_loss", total_depth_loss, global_step)
@@ -964,14 +986,17 @@ def main():
                         scalar = _tb_scalar(value)
                         if scalar is not None:
                             writer.add_scalar(key, scalar, global_step)
+                            wandb_metrics[key] = scalar
                     elif key.startswith(moe_perlayer_prefixes) and log_moe_perlayer:
                         scalar = _tb_scalar(value)
                         if scalar is not None:
                             writer.add_scalar(key, scalar, global_step)
+                            wandb_metrics[key] = scalar
                     elif key.startswith("align/"):
                         scalar = _tb_scalar(value)
                         if scalar is not None:
                             writer.add_scalar(key, scalar, global_step)
+                            wandb_metrics[key] = scalar
                 align_training_aliases = {
                     "align/current_video_loss": "training/current_video_loss",
                     "align/current_video_loss_weighted": "training/current_video_loss_weighted",
@@ -985,6 +1010,7 @@ def main():
                         scalar = _tb_scalar(loss_log[src_key])
                         if scalar is not None:
                             writer.add_scalar(dst_key, scalar, global_step)
+                            wandb_metrics[dst_key] = scalar
                 # MoE expert-selection monitoring (per layer, every moe_monitor_interval):
                 #   moe_expert_selection/      -> original add_histogram (Histograms tab; bins
                 #                                 expert IDs, edges look inflated -- kept as-is).
@@ -1013,13 +1039,20 @@ def main():
                             mean = total_counts.mean()
                             load_cv = (total_counts.std(unbiased=False) / (mean + 1e-9)).item()
                             writer.add_scalar("moe_summary/load_cv", load_cv, global_step)
+                            wandb_metrics["moe_summary/load_cv"] = load_cv
                 writer.add_scalar("training/grad_norm", grad_norm, global_step)
                 writer.add_scalar("training/lr", lr, global_step)
+                wandb_metrics["training/grad_norm"] = grad_norm
+                wandb_metrics["training/lr"] = lr
                 if expert_lr is not None:
                     writer.add_scalar("training/expert_lr", expert_lr, global_step)
+                    wandb_metrics["training/expert_lr"] = expert_lr
                 writer.add_scalar("training/avg_lang_length", avg_lang_length, global_step)
                 writer.add_scalar("training/max_norm_batch", ignore_batch_num, global_step)
                 writer.add_scalar("steptime", delta_time, global_step)
+                wandb_metrics["training/avg_lang_length"] = avg_lang_length
+                wandb_metrics["training/max_norm_batch"] = ignore_batch_num
+                wandb_metrics["steptime"] = delta_time
                 # we only log the last mini batch if grad acc is activated
                 if dataset_names is not None and 'batch_mean_losses' in loss_log:
                     batch_mean_losses = loss_log['batch_mean_losses']  # shape (B,)
@@ -1033,6 +1066,18 @@ def main():
                     for name, values in group_losses.items():
                         mean_loss = sum(values) / len(values)
                         writer.add_scalar(f"detailed_loss/{name}", mean_loss, global_step)
+                        wandb_metrics[f"detailed_loss/{name}"] = mean_loss
+
+                # Explicit push to wandb: add_scalar() above only feeds TensorBoard.
+                # Never let telemetry take down training.
+                if args.train.use_wandb:
+                    try:
+                        wandb.log(
+                            {k: _tb_scalar(v) for k, v in wandb_metrics.items()},
+                            step=global_step,
+                        )
+                    except Exception as e:
+                        logger.warning(f"wandb.log failed at step {global_step}: {repr(e)}")
 
                 if args.train.enable_profiling and global_step <= args.train.profile_end_step:
                     profiler.step()

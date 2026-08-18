@@ -5,7 +5,13 @@ import torch
 try:
     from lerobot.common.constants import HF_LEROBOT_HOME
 except ImportError:
-    from lerobot.utils.constants import HF_LEROBOT_HOME
+    try:
+        from lerobot.utils.constants import HF_LEROBOT_HOME
+    except ImportError:
+        # lerobot 0.3.x keeps it at the top level. That release line is what
+        # supports LeRobot v2.x datasets (CODEBASE_VERSION = v2.1); 0.4.x+ is
+        # v3.0-only and hard-rejects v2.x data.
+        from lerobot.constants import HF_LEROBOT_HOME
 from torchvision.transforms.v2 import Resize
 import torch.nn.functional as F
 from tqdm import tqdm

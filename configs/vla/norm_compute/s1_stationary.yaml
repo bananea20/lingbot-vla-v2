@@ -1,0 +1,43 @@
+# Norm-stats computation config for S1-stationary.
+#
+# Deliberately has NO `model:` section: scripts/compute_norm_stats.py defines
+# Arguments with only `data` and `train`, so passing a training config with a
+# model block makes the parser reject those keys.
+#
+# `joints` / `norm_type` are still required here because FeatureTransform builds
+# its feature map and normalizer from them.
+
+data:
+  datasets_type: vla
+  # Multi-dataset mode: train_path points at a list file whose first column is
+  # the robot config name. This is what lets all four sessions be covered.
+  data_name: multi
+  robot_name: s1_stationary_head
+  train_path: assets/training_data/s1_stationary_head.txt
+  robot_config_root: configs/robot_configs
+  norm_path: assets/norm_stats/s1_stationary.json
+  joints:
+    - arm.position: 14
+    - end.position: 14
+    - effector.position: 2
+    - waist.position: 4
+    - head.position: 2
+    - base.position: 3
+  cameras:
+    - camera_top
+    - camera_wrist_left
+    - camera_wrist_right
+  norm_type:
+    - arm.position: meanstd
+    - end.position: meanstd
+    - effector.position: meanstd
+    - waist.position: meanstd
+    - head.position: meanstd
+    - base.position: meanstd
+  num_workers: 8
+  prompt_type: global
+
+train:
+  micro_batch_size: 48
+  output_dir: ''
+  max_steps: 100000000000000

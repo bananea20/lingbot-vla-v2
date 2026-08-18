@@ -107,11 +107,18 @@ class LeRobotDataset(BaseLeRobotDataset):
         """
         item = {}
         for vid_key, query_ts in query_timestamps.items():
-            if LEROBOT_DATASET_API == "v3":
-                # LeRobot v3 stores episodes sequentially in a shared mp4, so
-                # query timestamps are relative to the episode start.
-                ep = self.meta.episodes[ep_idx]
-                from_timestamp = ep[f"videos/{vid_key}/from_timestamp"]
+            # LeRobot v3 datasets store episodes sequentially inside a shared
+            # mp4, so query timestamps must be offset by the episode start.
+            # v2.x keeps one mp4 per episode, where timestamps are already
+            # episode-relative and no such field exists.
+            #
+            # Probe the field instead of keying off LEROBOT_DATASET_API: that
+            # flag only records which import path succeeded, and lerobot 0.3.x
+            # (v2.x data) exposes the same `lerobot.datasets` path as 0.4.x.
+            ep = self.meta.episodes[ep_idx] if LEROBOT_DATASET_API == "v3" else None
+            ts_key = f"videos/{vid_key}/from_timestamp"
+            if ep is not None and ts_key in ep:
+                from_timestamp = ep[ts_key]
                 query_ts = [from_timestamp + ts for ts in query_ts]
 
             video_path = self.root / self.meta.get_video_file_path(ep_idx, vid_key)
@@ -205,11 +212,20 @@ class VLADataset(Dataset):
         self.dataset_meta = LeRobotDatasetMetadata(**metadata_kwargs)
         merged_delta = {**self.get_delta_timestamps(), **self.get_video_delta_timestamps()}
 
+        # Pass the resolved name/root the same way the metadata above does.
+        # lerobot 0.3.x validates repo_id as an HF repo id, so handing it a
+        # local filesystem path raises HFValidationError; `root` is what makes
+        # it read from disk.
+        dataset_kwargs = _filter_supported_kwargs(
+            BaseLeRobotDataset.__init__,
+            {"root": lerobot_root},
+        )
         self.dataset = LeRobotDataset(
-            repo_id=repo_id,
+            repo_id=lerobot_repo_id,
             image_transforms=Resize(image_size),
             delta_timestamps=merged_delta,
-            load_image=load_image
+            load_image=load_image,
+            **dataset_kwargs,
         )
 
         self.return_item = return_item
