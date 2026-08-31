@@ -1,0 +1,121 @@
+# S1-stationary humanoid, dataset: open_refrigerator_with_move (converted 25D)
+# Task: "Put the drinks into the refrigerator"
+#
+# Source was 34D cartesian with SO(3) 6D rotation; tools/convert_s1_generic.py
+# rewrote it to the same 25D layout used by the pick_and_move models. The
+# torso 9->4 compression is lossless here too: torso_y and roll are exactly 0
+# across 50 sampled episodes (yaw range 1.81 rad — larger than pick_and_move's
+# 0.86, consistent with turning to open a fridge).
+#
+# Converted layout (25D), FLU frame (Forward-Left-Up):
+#   [ 0: 4]  waist       x, z, pitch, yaw
+#   [ 4: 7]  left  xyz
+#   [ 7:11]  left  quat  (xyzw)
+#   [11:12]  left  gripper
+#   [12:15]  right xyz
+#   [15:19]  right quat  (xyzw)
+#   [19:20]  right gripper
+#   [20:22]  head        pan, tilt
+#   [22:25]  base        x, y, theta
+
+states:
+  - observation.state.end.position:
+      origin_keys:
+        - observation.state:
+            start: 4
+            end: 11        # left xyz + quat
+        - observation.state:
+            start: 12
+            end: 19        # right xyz + quat
+
+  - observation.state.effector.position:
+      origin_keys:
+        - observation.state:
+            start: 11
+            end: 12        # left gripper
+        - observation.state:
+            start: 19
+            end: 20        # right gripper
+
+  - observation.state.waist.position:
+      origin_keys:
+        - observation.state:
+            start: 0
+            end: 4
+
+  - observation.state.head.position:
+      origin_keys:
+        - observation.state:
+            start: 20
+            end: 22
+
+  - observation.state.base.position:
+      origin_keys:
+        - observation.state:
+            start: 22
+            end: 25
+
+actions:
+  # Delta (forced): treat quaternion components as raw floats and subtract.
+  # This violates rotation group structure but matches deployment requirements.
+  - action.end.position:
+      origin_keys:
+        - action:
+            start: 4
+            end: 11
+        - action:
+            start: 12
+            end: 19
+      relative_type: linear
+      subtract_state: True
+
+  # Framework asserts effector.position must be absolute (utils.py:227).
+  - action.effector.position:
+      origin_keys:
+        - action:
+            start: 11
+            end: 12
+        - action:
+            start: 19
+            end: 20
+      subtract_state: False
+
+  # Delta. relative_type must be pinned to a non-quaternion value: the default
+  # is 'quaternion_local', which trips the `assert 'end.position' in
+  # action_feature` guard at utils.py:391.
+  - action.waist.position:
+      origin_keys:
+        - action:
+            start: 0
+            end: 4
+      relative_type: linear
+      subtract_state: True
+
+  - action.head.position:
+      origin_keys:
+        - action:
+            start: 20
+            end: 22
+      relative_type: linear
+      subtract_state: True
+
+  - action.base.position:
+      origin_keys:
+        - action:
+            start: 22
+            end: 25
+      relative_type: linear
+      subtract_state: True
+
+images:
+  # camera_top is fed from the HEAD camera (720x1280), not stereo_left.
+  # Resized to 256x256 at load time (5x downsample vs 2.5x for stereo_left),
+  # so effective sharpness differs between head and stereo_left models.
+  - observation.images.camera_top:
+      origin_keys: images_dict.head.rgb
+  - observation.images.camera_wrist_left:
+      origin_keys: images_dict.left.rgb
+  - observation.images.camera_wrist_right:
+      origin_keys: images_dict.right.rgb
+
+norm_stats: assets/norm_stats/s1_fridge_head.json

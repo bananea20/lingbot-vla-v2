@@ -1,0 +1,17 @@
+# Norm stats compute config for s1_fridge (matches s1_stationary but with fridge paths)
+
+model:
+  model_path: pretrained/lingbot_models/pretrained/lingbot-vla-v2-6b
+  tokenizer_path: pretrained/lingbot_models/pretrained/Qwen3-VL-4B-Instruct
+
+data:
+  data_name: multi
+  train_path: assets/training_data/s1_fridge.txt
+  robot_config_root: ./configs/robot_configs
+  use_future_image: false
+  num_workers: 8
+
+train:
+  output_dir: /tmp/norm_compute_s1_fridge
+  bf16: true
+  dataloader_num_workers: 8

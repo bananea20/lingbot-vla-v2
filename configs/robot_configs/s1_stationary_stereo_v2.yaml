@@ -1,0 +1,124 @@
+# S1-stationary humanoid, dataset: pick_and_move_from_table_to_wash (converted 25D)
+# STEREO camera variant.
+#
+# Source data was 34D cartesian with SO(3) 6D rotation. tools/convert_s1_dataset.py
+# rewrote it to a 25D layout that this framework can slice directly, since the
+# loader only supports start/end slicing and concatenation (no transform hooks).
+#
+# Converted layout (25D), FLU frame (Forward-Left-Up):
+#   [ 0: 4]  waist       x, z, pitch, yaw   (torso 9D compressed, lossless:
+#                                            torso_y and roll are structurally 0)
+#   [ 4: 7]  left  xyz
+#   [ 7:11]  left  quat  (xyzw)
+#   [11:12]  left  gripper
+#   [12:15]  right xyz
+#   [15:19]  right quat  (xyzw)
+#   [19:20]  right gripper
+#   [20:22]  head        pan, tilt
+#   [22:25]  base        x, y, theta
+#
+# Round-trip 34D -> 25D -> 34D verified on real episodes: max error 3.8e-6.
+
+states:
+  # Both arms concatenate into end.position (14 = 2 x (xyz + quat)), matching the
+  # pretrained unified space. Duplicate origin keys are disambiguated internally.
+  - observation.state.end.position:
+      origin_keys:
+        - observation.state:
+            start: 4
+            end: 11        # left xyz + quat
+        - observation.state:
+            start: 12
+            end: 19        # right xyz + quat
+
+  - observation.state.effector.position:
+      origin_keys:
+        - observation.state:
+            start: 11
+            end: 12        # left gripper
+        - observation.state:
+            start: 19
+            end: 20        # right gripper
+
+  - observation.state.waist.position:
+      origin_keys:
+        - observation.state:
+            start: 0
+            end: 4
+
+  - observation.state.head.position:
+      origin_keys:
+        - observation.state:
+            start: 20
+            end: 22
+
+  - observation.state.base.position:
+      origin_keys:
+        - observation.state:
+            start: 22
+            end: 25
+
+actions:
+  # Delta (forced, v2): quaternion components treated as raw floats and
+  # subtracted. Violates rotation group structure but matches deployment.
+  - action.end.position:
+      origin_keys:
+        - action:
+            start: 4
+            end: 11
+        - action:
+            start: 12
+            end: 19
+      relative_type: linear
+      subtract_state: True
+
+  # Framework asserts effector.position must be absolute (utils.py:227).
+  - action.effector.position:
+      origin_keys:
+        - action:
+            start: 11
+            end: 12
+        - action:
+            start: 19
+            end: 20
+      subtract_state: False
+
+  # Delta. x/z are translations; pitch/yaw stay far from +-pi in this dataset
+  # (pitch in [-0.33, 0.12], yaw in [-0.58, 0.28]), so plain subtraction is safe.
+  - action.waist.position:
+      origin_keys:
+        - action:
+            start: 0
+            end: 4
+      relative_type: linear
+      subtract_state: True
+
+  - action.head.position:
+      origin_keys:
+        - action:
+            start: 20
+            end: 22
+      relative_type: linear
+      subtract_state: True
+
+  - action.base.position:
+      origin_keys:
+        - action:
+            start: 22
+            end: 25
+      relative_type: linear
+      subtract_state: True
+
+images:
+  # stereo_camera variant: top view key is images_dict.head_stereo.rgb (NOT head.rgb)
+  - observation.images.camera_top:
+      origin_keys: images_dict.head_stereo.rgb
+  - observation.images.camera_wrist_left:
+      origin_keys: images_dict.left.rgb
+  - observation.images.camera_wrist_right:
+      origin_keys: images_dict.right.rgb
+
+# Shared with s1_stationary_head.yaml: head_camera and stereo_camera hold the
+# same trajectories (state/action verified bit-identical, max diff 0.0), so one
+# stats file is correct for both.
+norm_stats: assets/norm_stats/s1_stationary_v2.json

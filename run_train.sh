@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 # 正式训练启动脚本。
-# 用法: bash run_train.sh [head|stereo] [额外的 --key value 覆盖参数...]
+# 用法: bash run_train.sh [head|stereo|fridge|fridge_head] [额外的 --key value 覆盖参数...]
 #
 # 环境依赖（已在本机装好）：
 #   - lerobot 0.3.2  (CODEBASE_VERSION v2.1，支持本数据集的 v2.0 布局；
@@ -14,7 +14,23 @@ cd "$(dirname "${BASH_SOURCE[0]}")"
 VARIANT="${1:-head}"
 shift || true
 
-CFG="configs/vla/s1_stationary/s1_stationary_${VARIANT}.yaml"
+# 根据 variant 确定配置路径
+case "$VARIANT" in
+  head|stereo|head_v2|stereo_v2)
+    CFG="configs/vla/s1_stationary/s1_stationary_${VARIANT}.yaml"
+    ;;
+  fridge|fridge_head)
+    CFG="configs/vla/s1_fridge/s1_${VARIANT}.yaml"
+    ;;
+  fridge_qrot|fridge_head_qrot)
+    CFG="configs/vla/s1_fridge_qrot/s1_${VARIANT}.yaml"
+    ;;
+  *)
+    echo "unknown variant: $VARIANT (expected: head|stereo|head_v2|stereo_v2|fridge|fridge_head|fridge_qrot|fridge_head_qrot)" >&2
+    exit 1
+    ;;
+esac
+
 [[ -f "$CFG" ]] || { echo "config not found: $CFG" >&2; exit 1; }
 
 LOG="logs/train_${VARIANT}_$(date +%Y%m%d_%H%M%S).log"
