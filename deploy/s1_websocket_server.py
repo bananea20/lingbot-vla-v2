@@ -20,6 +20,7 @@ import argparse
 import asyncio
 import logging
 import traceback
+from pathlib import Path
 
 import numpy as np
 import websockets
@@ -29,6 +30,7 @@ from deploy.lingbot_vla_v2_policy import LingbotVLAv2Server
 from deploy.s1_protocol_bridge import (
     action_25d_to_34d,
     action_dict_to_25d,
+    load_quat_ref,
     state_34d_to_25d,
 )
 
@@ -87,7 +89,35 @@ def main():
         help="Broadcast head from state instead of using the model's prediction "
              "(mirrors vla_server's CHASSIS_WITHOUT_HEAD_LAYOUT).",
     )
+    p.add_argument(
+        "--quat_ref", default="auto",
+        help="quat_ref json fixing the quaternion sign convention. 'auto' "
+             "(default) looks for one next to the checkpoint; 'none' disables "
+             "alignment, which is correct only for models trained before this "
+             "convention existed. A mismatch here is silent and halves "
+             "effective accuracy, so the resolved choice is always logged.",
+    )
     args = p.parse_args()
+
+    # A rotation is represented by both q and -q, and the 6D->quat conversion
+    # picks between them on numerical grounds, so the sign flips arbitrarily as
+    # the arm moves. Models trained on sign-aligned data need the same alignment
+    # applied to incoming state here.
+    quat_ref = args.quat_ref
+    if quat_ref == "auto":
+        mp = Path(args.model_path)
+        found = [c for c in (
+            *sorted((mp / "configs").glob("*quat_ref*.json")),
+            *sorted((mp.parent / "configs").glob("*quat_ref*.json")),
+            mp.parent / "quat_ref.json",
+        ) if c.is_file()]
+        quat_ref = str(found[0]) if found else None
+        logger.info("quat_ref auto-detect: %s",
+                    quat_ref or "not found -> alignment DISABLED (assuming a "
+                                "pre-alignment model; pass --quat_ref if wrong)")
+    elif quat_ref == "none":
+        quat_ref = None
+    load_quat_ref(quat_ref)
 
     logger.info("loading %s (%s)", args.model_path, args.robo_name)
     policy = LingbotVLAv2Server(

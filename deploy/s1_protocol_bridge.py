@@ -26,7 +26,9 @@ Model layout (25D) — what tools/convert_s1_dataset.py produced for training:
 The torso 9->4 compression is lossless for this robot: torso_y and roll are
 structurally zero (verified over 403 episodes / 336k frames, max residual 1e-6).
 """
+import json
 import logging
+from pathlib import Path
 
 import numpy as np
 import torch
@@ -95,6 +97,49 @@ def rot6d_to_quat_xyzw(rot6d):
     return quats.reshape(*rot6d.shape[:-1], 4)
 
 
+# Quaternion sign convention, set from the model's packaged quat_ref file.
+#
+# A rotation has two quaternion representations, q and -q, and
+# Rotation.from_matrix picks between them on numerical grounds (largest
+# component positive), so the choice flips arbitrarily as the arm moves.
+# Training data for such models is aligned to a fixed hemisphere per arm; the
+# same alignment must be applied to incoming state here, or the model sees the
+# opposite sign on roughly half the frames and silently mispredicts.
+#
+# Left as None for models trained before this convention existed -- those were
+# fit on unaligned data, so aligning their input would be the mismatch.
+_QUAT_REF = None
+
+
+def load_quat_ref(path):
+    """Install the quaternion sign convention from a quat_ref json file.
+
+    Pass None to disable alignment (for models trained on unaligned data).
+    Returns the loaded reference dict, or None.
+    """
+    global _QUAT_REF
+    if path is None:
+        _QUAT_REF = None
+        print("[bridge] quaternion sign alignment: DISABLED")
+        return None
+    ref = json.loads(Path(path).read_text())["quat_ref_xyzw"]
+    _QUAT_REF = {k: np.asarray(v, dtype=np.float64) for k, v in ref.items()}
+    for arm, v in _QUAT_REF.items():
+        print(f"[bridge] quaternion sign alignment: {arm} REF={np.round(v, 5).tolist()}")
+    return _QUAT_REF
+
+
+def _align_quat(quat, arm):
+    """Flip quat into the configured reference hemisphere. Identity if unset.
+
+    q and -q denote the same rotation, so this never changes the pose -- it only
+    picks a consistent representative.
+    """
+    if _QUAT_REF is None:
+        return quat
+    return -quat if float(np.dot(quat, _QUAT_REF[arm])) < 0.0 else quat
+
+
 def state_34d_to_25d(state):
     """Runtime 34D state -> model 25D state."""
     state = np.asarray(state, dtype=np.float64).reshape(-1)
@@ -110,10 +155,10 @@ def state_34d_to_25d(state):
     return np.concatenate([
         waist,                                                  # [ 0: 4]
         left[:3],                                               # [ 4: 7]
-        rot6d_to_quat_xyzw(left[3:9]),                          # [ 7:11]
+        _align_quat(rot6d_to_quat_xyzw(left[3:9]), "left"),     # [ 7:11]
         state[R_LEFT_GRIP],                                     # [11:12]
         right[:3],                                              # [12:15]
-        rot6d_to_quat_xyzw(right[3:9]),                         # [15:19]
+        _align_quat(rot6d_to_quat_xyzw(right[3:9]), "right"),   # [15:19]
         state[R_RIGHT_GRIP],                                    # [19:20]
         state[R_HEAD],                                          # [20:22]
         state[R_CHASSIS],                                       # [22:25]

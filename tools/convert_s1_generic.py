@@ -27,6 +27,7 @@ from tqdm import tqdm
 
 sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
 
+from tools.align_quat_signs import align_dataset
 from tools.convert_s1_dataset import convert_34d_to_25d
 
 
@@ -102,6 +103,12 @@ def main():
     ap.add_argument("--skip-videos", action="store_true",
                     help="Symlink videos/ instead of copying (saves disk; the "
                          "source must stay mounted).")
+    ap.add_argument("--quat-ref-out",
+                    help="Where to write the quaternion sign reference. Given "
+                         "this, a second pass aligns every episode's quaternions "
+                         "to one hemisphere per arm, which callers (training and "
+                         "deploy/s1_protocol_bridge) must then honour. Omit only "
+                         "to reproduce pre-alignment datasets.")
     args = ap.parse_args()
 
     src_root, dst_root = Path(args.src), Path(args.dst)
@@ -134,6 +141,18 @@ def main():
         rewrite_info(dst / "meta/info.json")
 
     print(f"\nTotal: {total_eps} episodes, {total_frames} frames -> {dst_root}")
+
+    if args.quat_ref_out:
+        # Second pass, over the whole task at once: Rotation.from_matrix picks
+        # between the two quaternion representations of a rotation (q and -q) on
+        # numerical grounds, independently per frame and per call, so state and
+        # action disagree on sign for a small fraction of frames. Physically
+        # nothing moved, but action - state then jumps to L2 = 2.0, and one such
+        # frame poisons its entire 50-step chunk. Aligning to one hemisphere per
+        # arm removes it; the reference is a task-level statistic, so this cannot
+        # be folded into the per-episode conversion above.
+        print("\n=== aligning quaternion signs ===")
+        align_dataset(dst_root, ref_out=args.quat_ref_out)
 
 
 if __name__ == "__main__":
