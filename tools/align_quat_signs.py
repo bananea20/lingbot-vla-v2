@@ -140,7 +140,9 @@ def align_dataset(root, ref_out=None, dry_run=False):
 def main():
     ap = argparse.ArgumentParser(description=__doc__.split("\n")[0])
     ap.add_argument("--root", required=True)
-    ap.add_argument("--ref-out", required=True)
+    ap.add_argument("--ref-out", default=None,
+                    help="Where to write the REF constants. Omit for a "
+                         "verification-only run.")
     ap.add_argument("--dry-run", action="store_true")
     args = ap.parse_args()
     align_dataset(args.root, ref_out=args.ref_out, dry_run=args.dry_run)

@@ -1,0 +1,17 @@
+{
+  "quat_ref_xyzw": {
+    "left": [
+      0.004952135778439658,
+      0.00794701560949862,
+      -0.6735865381544619,
+      0.7390490490564361
+    ],
+    "right": [
+      0.00918681916720342,
+      0.020776391535598848,
+      0.7304949687632745,
+      -0.6825401413249562
+    ]
+  },
+  "note": "Align state/action quaternions into this hemisphere before use. Inference must apply the same alignment to incoming state."
+}
