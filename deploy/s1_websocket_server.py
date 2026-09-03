@@ -1,12 +1,9 @@
 #!/usr/bin/env python3
-"""
-WebSocket server exposing this repo's trained S1 checkpoint over the astribot
-runtime protocol, so astribot_eval-frank connects without any client change.
+"""Serve LingBotVLA over the asynchronous astribot runtime protocol.
 
-Wire protocol (identical to vla_server-chassis_move):
-  recv msgpack: {"images": {"head","left_wrist","right_wrist"}, "state": (34,),
-                 "prompt": str}
-  send msgpack: {"actions": (T, 34)}
+The client opens two connections. A ``sender`` pushes observations and a
+``receiver`` receives action broadcasts. Only the newest pending observation
+is retained while inference is running, matching the Pi0.5 server's behavior.
 
 Internally the 34D runtime layout is bridged to the 25D layout the model was
 trained on; see deploy/s1_protocol_bridge.py.
@@ -18,6 +15,7 @@ Usage:
 """
 import argparse
 import asyncio
+import contextlib
 import logging
 import traceback
 from pathlib import Path
@@ -26,7 +24,6 @@ import numpy as np
 import websockets
 
 from deploy import msgpack_numpy
-from deploy.lingbot_vla_v2_policy import LingbotVLAv2Server
 from deploy.s1_protocol_bridge import (
     action_25d_to_34d,
     action_dict_to_25d,
@@ -49,7 +46,40 @@ CAMERA_MAP = {
         "left_wrist": "images_dict.left.rgb",
         "right_wrist": "images_dict.right.rgb",
     },
+    "s1_fridge_head_qrot": {
+        "head": "images_dict.head.rgb",
+        "left_wrist": "images_dict.left.rgb",
+        "right_wrist": "images_dict.right.rgb",
+    },
 }
+
+
+CAMERA_ALIASES = {
+    "head": ("head", "cam_high"),
+    "left_wrist": ("left_wrist", "cam_left_wrist"),
+    "right_wrist": ("right_wrist", "cam_right_wrist"),
+}
+
+
+def _get_camera(images, camera_name):
+    aliases = CAMERA_ALIASES[camera_name]
+    for key in aliases:
+        if key in images:
+            return images[key]
+    raise KeyError(
+        f"Missing camera '{camera_name}' (accepted: {list(aliases)}); "
+        f"got {sorted(images)}"
+    )
+
+
+def _validate_image(image, camera_name):
+    image = np.asarray(image)
+    if image.ndim != 3 or image.shape[-1] != 3:
+        raise ValueError(
+            f"Camera '{camera_name}' must be HWC RGB (prefer uint8 [0,255]); "
+            f"got shape {image.shape}. Set astribot_eval image_type='int'."
+        )
+    return image
 
 
 def build_observation(obs, robo_name):
@@ -63,15 +93,128 @@ def build_observation(obs, robo_name):
     cam_map = CAMERA_MAP[robo_name]
     images = obs["images"]
     for client_key, lerobot_key in cam_map.items():
-        if client_key not in images:
-            raise KeyError(f"Missing camera '{client_key}'; got {sorted(images)}")
-        out[lerobot_key] = np.asarray(images[client_key])
+        out[lerobot_key] = _validate_image(
+            _get_camera(images, client_key), client_key
+        )
 
     out["task"] = obs.get("prompt", "")
     return out, state34
 
 
+class LingbotAsyncProtocolServer:
+    """Adapt a LingBot policy to the Pi0.5 sender/receiver wire protocol."""
+
+    def __init__(self, policy, robo_name, preserve_head_from_state=False):
+        self.policy = policy
+        self.robo_name = robo_name
+        self.preserve_head_from_state = preserve_head_from_state
+        self.receivers = set()
+        self._latest_observation = None
+        self._observation_ready = asyncio.Event()
+        self._reset_pending = True
+        self._trajectory_generation = 0
+        self._packer = msgpack_numpy.Packer()
+
+    def request_reset(self):
+        """Discard pending input and reset the policy before the next inference."""
+        self._latest_observation = None
+        self._reset_pending = True
+        self._trajectory_generation += 1
+
+    def submit_observation(self, observation):
+        """Keep only the newest observation while the model is busy."""
+        self._latest_observation = observation
+        self._observation_ready.set()
+
+    def _infer(self, observation):
+        model_obs, state34 = build_observation(observation, self.robo_name)
+        chunk = self.policy.infer(model_obs)
+        a25 = action_dict_to_25d(chunk, allow_zero_fill=False)
+        return action_25d_to_34d(
+            a25,
+            state34,
+            preserve_head_from_state=self.preserve_head_from_state,
+        )
+
+    async def _broadcast(self, response):
+        packed = self._packer.pack(response)
+        for receiver in list(self.receivers):
+            try:
+                await receiver.send(packed)
+            except Exception:
+                self.receivers.discard(receiver)
+
+    async def inference_loop(self):
+        while True:
+            await self._observation_ready.wait()
+            self._observation_ready.clear()
+            observation = self._latest_observation
+            self._latest_observation = None
+            if observation is None:
+                continue
+
+            generation = self._trajectory_generation
+            try:
+                if self._reset_pending:
+                    self._reset_pending = False
+                    await asyncio.to_thread(self.policy.reset, self.robo_name)
+                actions = await asyncio.to_thread(self._infer, observation)
+                if generation != self._trajectory_generation:
+                    logger.info("discarding action from reset trajectory")
+                    continue
+                await self._broadcast(
+                    {
+                        "actions": actions,
+                        "obs_timestamp": float(observation["obs_timestamp"]),
+                    }
+                )
+            except Exception as error:
+                logger.error(
+                    "inference failed: %s\n%s", error, traceback.format_exc()
+                )
+
+    async def _handle_sender(self, ws):
+        self.request_reset()
+        logger.info("client registered as sender: %s", getattr(ws, "remote_address", "?"))
+        async for raw in ws:
+            try:
+                message = msgpack_numpy.unpackb(raw)
+                if isinstance(message, dict) and message.get("reset") == 1:
+                    self.request_reset()
+                    logger.info("policy reset requested by sender")
+                    continue
+                self.submit_observation(message)
+            except Exception as error:
+                logger.warning("invalid sender message: %s", error)
+
+    async def _handle_receiver(self, ws):
+        self.receivers.add(ws)
+        logger.info("client registered as receiver: %s", getattr(ws, "remote_address", "?"))
+        try:
+            await ws.wait_closed()
+        finally:
+            self.receivers.discard(ws)
+
+    async def handler(self, ws):
+        peer = getattr(ws, "remote_address", "?")
+        logger.info("client connected: %s", peer)
+        try:
+            initial_message = msgpack_numpy.unpackb(await ws.recv())
+            role = initial_message.get("role") if isinstance(initial_message, dict) else None
+            if role == "sender":
+                await self._handle_sender(ws)
+            elif role == "receiver":
+                await self._handle_receiver(ws)
+            else:
+                logger.warning("unknown client role from %s: %r", peer, role)
+        except websockets.exceptions.ConnectionClosed:
+            logger.info("client disconnected: %s", peer)
+
+
 def main():
+    # Keep the heavyweight model import out of protocol-only tests.
+    from deploy.lingbot_vla_v2_policy import LingbotVLAv2Server
+
     p = argparse.ArgumentParser(description="S1 VLA websocket server")
     p.add_argument("--model_path", required=True)
     p.add_argument("--robo_name", required=True, choices=sorted(CAMERA_MAP))
@@ -132,35 +275,29 @@ def main():
     policy.reset(args.robo_name)
     logger.info("model ready")
 
-    packer = msgpack_numpy.Packer()
-
-    async def handler(ws):
-        peer = getattr(ws, "remote_address", "?")
-        logger.info("client connected: %s", peer)
-        try:
-            async for raw in ws:
-                try:
-                    obs = msgpack_numpy.unpackb(raw)
-                    model_obs, state34 = build_observation(obs, args.robo_name)
-                    chunk = policy.infer(model_obs)
-                    a25 = action_dict_to_25d(chunk)
-                    a34 = action_25d_to_34d(
-                        a25, state34,
-                        preserve_head_from_state=args.preserve_head_from_state,
-                    )
-                    await ws.send(packer.pack({"actions": a34}))
-                except Exception as e:
-                    # Never drop the connection: the client runs a 250Hz control
-                    # loop and reconnecting mid-episode is worse than one bad step.
-                    logger.error("inference failed: %s\n%s", e, traceback.format_exc())
-                    await ws.send(packer.pack({"error": str(e)}))
-        except websockets.exceptions.ConnectionClosed:
-            logger.info("client disconnected: %s", peer)
+    protocol_server = LingbotAsyncProtocolServer(
+        policy,
+        args.robo_name,
+        preserve_head_from_state=args.preserve_head_from_state,
+    )
 
     async def serve():
-        async with websockets.serve(handler, args.host, args.port, max_size=None):
-            logger.info("listening on ws://%s:%d", args.host, args.port)
-            await asyncio.Future()
+        inference_task = asyncio.create_task(protocol_server.inference_loop())
+        try:
+            async with websockets.serve(
+                protocol_server.handler,
+                args.host,
+                args.port,
+                compression=None,
+                max_size=100 * 1024 * 1024,
+                max_queue=10,
+            ):
+                logger.info("listening on ws://%s:%d", args.host, args.port)
+                await asyncio.Future()
+        finally:
+            inference_task.cancel()
+            with contextlib.suppress(asyncio.CancelledError):
+                await inference_task
 
     asyncio.run(serve())
 

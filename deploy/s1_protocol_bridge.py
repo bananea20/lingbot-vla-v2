@@ -181,6 +181,10 @@ _ACTION_SPEC = [
 def action_dict_to_25d(action_chunk, allow_zero_fill=True):
     """Policy output dict -> (T, 25) array in model layout.
 
+    LingbotVLAv2Server returns the fully reconstructed original action under
+    the ``action`` key. Keep support for split semantic keys for other policy
+    wrappers, but prefer the direct 25D output when it is present.
+
     action_chunk maps the keys in _ACTION_SPEC to (T, dim) arrays. A missing
     key is zero-filled when allow_zero_fill, with a warning: absent means the
     robot config never mapped that joint group, and holding still is the safe
@@ -188,6 +192,26 @@ def action_dict_to_25d(action_chunk, allow_zero_fill=True):
     robot config and this bridge disagree, and silently padding would misalign
     every downstream slice.
     """
+    if "action" in action_chunk:
+        action = np.asarray(action_chunk["action"], dtype=np.float64)
+        if action.ndim == 1:
+            action = action[None, :]
+        if action.ndim != 2 or action.shape[-1] != MODEL_DIM:
+            raise ValueError(
+                "action: expected shape (T, 25), got "
+                f"{action.shape}"
+            )
+        return action
+
+    present_semantic_keys = set(action_chunk).intersection(
+        key for key, _ in _ACTION_SPEC
+    )
+    if not present_semantic_keys:
+        raise KeyError(
+            "action_chunk contains neither direct 'action' nor LingBot semantic "
+            f"action keys; got {sorted(action_chunk)}"
+        )
+
     lengths = {
         k: np.asarray(v).shape[0]
         for k, v in action_chunk.items()
