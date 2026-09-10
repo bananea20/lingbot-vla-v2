@@ -3,6 +3,8 @@
 按时间倒序排列。最新的会话记录在最上方。
 
 <!-- 新条目加在这下方 -->
+- 2026-09-10 [delta参数化重构-quaternion_local与se2_local](2026-09-10-delta参数化重构-quaternion_local与se2_local.md) — 改数据被实测否决,换参数化:末端群运算+底盘SE(2)
+- 2026-09-07 [ckpt清理与hf_ckpt推理包](2026-09-07-ckpt清理与hf_ckpt推理包.md) — 中间 ckpt 清理回收 2.4T,推理只需 hf_ckpt 24G
 - 2026-08-18 [S1训练归档与wandb修复](2026-08-18-S1训练归档与wandb修复.md) — S1 stationary head/stereo 训练完整配置归档，修复 wandb sync_tensorboard 构造顺序 bug，推送到私人 fork
 
 ## 使用说明
