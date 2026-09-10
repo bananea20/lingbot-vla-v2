@@ -6,6 +6,9 @@ __all__ = [
     '_is_quaternion_relative_type',
     'relative_pose_quaternion',
     'absolute_pose_quaternion',
+    '_is_se2_relative_type',
+    'relative_pose_se2',
+    'absolute_pose_se2',
 ]
 
 def quat_normalize(q: torch.Tensor, eps: float = 1e-8) -> torch.Tensor:
@@ -163,3 +166,84 @@ def matrix_to_quat(R: Tensor) -> Tensor:
     q[..., 3] = torch.where(cond4, (m10 - m01) / s4, q[..., 3])
 
     return quat_normalize(q)
+
+
+def wrap_to_pi(angle: torch.Tensor) -> torch.Tensor:
+    """Wrap angles into [-pi, pi].
+
+    Uses the round-to-nearest form rather than ``remainder(x + pi, 2pi) - pi``: the
+    shifted form loses small angles to catastrophic cancellation (float32 eps near
+    pi is ~2.4e-7), turning an exactly-zero heading delta into float noise, which
+    then survives into the normalisation range.
+    """
+    two_pi = 2 * np.pi
+    return angle - two_pi * torch.round(angle / two_pi)
+
+
+def rot2d(vec: torch.Tensor, theta: torch.Tensor) -> torch.Tensor:
+    """Rotate 2D vectors by theta. vec: (..., 2), theta: (..., 1)."""
+    cos, sin = torch.cos(theta), torch.sin(theta)
+    x, y = vec[..., 0:1], vec[..., 1:2]
+    return torch.cat([cos * x - sin * y, sin * x + cos * y], dim=-1)
+
+
+def _resolve_se2_relative_type(relative_type: str | None) -> str:
+    if relative_type in ('se2', 'se2_local'):
+        return 'local'
+    if relative_type == 'se2_world':
+        return 'world'
+    raise ValueError(f"Unsupported SE(2) relative type: {relative_type}")
+
+
+def _is_se2_relative_type(relative_type: str | None) -> bool:
+    return relative_type in {'se2', 'se2_local', 'se2_world'}
+
+
+def relative_pose_se2(
+    action: torch.Tensor,
+    state: torch.Tensor,
+    pose_dim: int = 3,
+    relative_type: str | None = None,
+) -> torch.Tensor:
+    """Planar analogue of :func:`relative_pose_quaternion` for [x, y, theta] poses.
+
+    ``se2_local`` rotates the translation into the current base frame and takes the
+    wrapped heading difference, so the delta does not depend on where the odometry
+    origin happens to sit. ``se2_world`` keeps the translation in the world frame.
+    """
+    relative_type = _resolve_se2_relative_type(relative_type)
+    assert action.shape[-1] == state.shape[-1], (action.shape, state.shape)
+    assert action.shape[-1] % pose_dim == 0, (action.shape[-1], pose_dim)
+    out = []
+    for start in range(0, action.shape[-1], pose_dim):
+        a = action[..., start:start + pose_dim]
+        s = state[..., start:start + pose_dim]
+        d_xy = a[..., 0:2] - s[..., 0:2]
+        if relative_type == 'local':
+            d_xy = rot2d(d_xy, -s[..., 2:3])
+        out.append(torch.cat([d_xy, wrap_to_pi(a[..., 2:3] - s[..., 2:3])], dim=-1))
+    return torch.cat(out, dim=-1)
+
+
+def absolute_pose_se2(
+    relative: torch.Tensor,
+    state: torch.Tensor,
+    pose_dim: int = 3,
+    relative_type: str | None = None,
+) -> torch.Tensor:
+    """Inverse of :func:`relative_pose_se2`.
+
+    The reconstructed heading is deliberately left unwrapped so multi-turn odometry
+    stays continuous; this is an exact inverse whenever the true heading delta lies
+    inside (-pi, pi], which holds for ordinary base motion.
+    """
+    relative_type = _resolve_se2_relative_type(relative_type)
+    assert relative.shape[-1] == state.shape[-1], (relative.shape, state.shape)
+    assert relative.shape[-1] % pose_dim == 0, (relative.shape[-1], pose_dim)
+    out = []
+    for start in range(0, relative.shape[-1], pose_dim):
+        r = relative[..., start:start + pose_dim]
+        s = state[..., start:start + pose_dim]
+        d_xy = rot2d(r[..., 0:2], s[..., 2:3]) if relative_type == 'local' else r[..., 0:2]
+        out.append(torch.cat([s[..., 0:2] + d_xy, s[..., 2:3] + r[..., 2:3]], dim=-1))
+    return torch.cat(out, dim=-1)

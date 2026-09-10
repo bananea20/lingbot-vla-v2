@@ -394,6 +394,13 @@ class FeatureTransform:
                         item[state_feature],
                         relative_type=relative_type,
                     )
+                elif _is_se2_relative_type(relative_type):
+                    assert 'base.position' in action_feature
+                    item[action_feature] = relative_pose_se2(
+                        item[action_feature],
+                        item[state_feature],
+                        relative_type=relative_type,
+                    )
                 else:
                     item[action_feature] -= item[state_feature]
 
@@ -501,6 +508,13 @@ class FeatureTransform:
                 if _is_quaternion_relative_type(relative_type):
                     assert 'end.position' in action_feature
                     item[action_feature] = absolute_pose_quaternion(
+                        item[action_feature],
+                        item[state_feature],
+                        relative_type=relative_type,
+                    )
+                elif _is_se2_relative_type(relative_type):
+                    assert 'base.position' in action_feature
+                    item[action_feature] = absolute_pose_se2(
                         item[action_feature],
                         item[state_feature],
                         relative_type=relative_type,

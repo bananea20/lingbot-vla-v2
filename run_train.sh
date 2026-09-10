@@ -25,8 +25,11 @@ case "$VARIANT" in
   fridge_qrot|fridge_head_qrot)
     CFG="configs/vla/s1_fridge_qrot/s1_${VARIANT}.yaml"
     ;;
+  fridge_qlocal|fridge_head_qlocal)
+    CFG="configs/vla/s1_fridge_qlocal/s1_${VARIANT}.yaml"
+    ;;
   *)
-    echo "unknown variant: $VARIANT (expected: head|stereo|head_v2|stereo_v2|fridge|fridge_head|fridge_qrot|fridge_head_qrot)" >&2
+    echo "unknown variant: $VARIANT (expected: head|stereo|head_v2|stereo_v2|fridge|fridge_head|fridge_qrot|fridge_head_qrot|fridge_qlocal|fridge_head_qlocal)" >&2
     exit 1
     ;;
 esac
