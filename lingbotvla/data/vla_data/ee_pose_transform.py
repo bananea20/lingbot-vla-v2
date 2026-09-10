@@ -121,7 +121,16 @@ def absolute_pose_quaternion(
             abs_xyz = s_xyz + quat_rotate(s_q, r_xyz)
         else:
             abs_xyz = s_xyz + r_xyz
-        abs_q = quat_canonicalize(quat_normalize(quat_multiply(s_q, r_q)))
+        # Follow the current state's hemisphere instead of canonicalising to
+        # w >= 0. Both name the same rotation, but w >= 0 flips whichever half of
+        # the poses happen to have w < 0 -- here 50% of frames -- and a consumer
+        # that interpolates or diffs consecutive quaternions reads that as a ~360
+        # degree spin (L2 jumps to 2.0, the max between unit quaternions). Worse,
+        # the flip can land mid-chunk, so a single 50-step output changes sign
+        # partway through. Anchoring to s_q keeps the whole chunk on one side,
+        # since all 50 steps share it.
+        abs_q = quat_normalize(quat_multiply(s_q, r_q))
+        abs_q = torch.where((abs_q * s_q).sum(-1, keepdim=True) < 0, -abs_q, abs_q)
         parts.append(torch.cat([abs_xyz, abs_q], dim=-1))
     return torch.cat(parts, dim=-1)
 
