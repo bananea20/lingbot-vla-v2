@@ -28,6 +28,7 @@ from deploy.s1_protocol_bridge import (
     action_25d_to_34d,
     action_dict_to_25d,
     load_quat_ref,
+    reset_quat_continuity,
     state_34d_to_25d,
 )
 
@@ -157,6 +158,9 @@ class LingbotAsyncProtocolServer:
             try:
                 if self._reset_pending:
                     self._reset_pending = False
+                    # Drop the previous episode's quaternion hemisphere, or the
+                    # first state of the new one gets aligned to a stale anchor.
+                    reset_quat_continuity()
                     await asyncio.to_thread(self.policy.reset, self.robo_name)
                 actions = await asyncio.to_thread(self._infer, observation)
                 if generation != self._trajectory_generation:

@@ -129,15 +129,41 @@ def load_quat_ref(path):
     return _QUAT_REF
 
 
+# Last quaternion emitted per arm, so consecutive states stay on one hemisphere.
+#
+# The runtime's own state flips sign on its own: measured on a real rollout, the
+# left arm's state quaternion negated all four components between two adjacent
+# steps while the actual wrist moved 0.46 degrees. That is the same rotation
+# written the other way, but the delta reconstruction anchors on this state, so
+# the anchor flipping drags the output with it -- one such flip produced a 144.6
+# degree jump across a chunk boundary. A fixed reference cannot catch this; the
+# discontinuity is between frames, not against any absolute convention.
+_PREV_QUAT = {}
+
+
+def reset_quat_continuity():
+    """Forget the previous-frame quaternions. Call between episodes."""
+    _PREV_QUAT.clear()
+
+
 def _align_quat(quat, arm):
-    """Flip quat into the configured reference hemisphere. Identity if unset.
+    """Keep quat on the same hemisphere as the previous frame for this arm.
 
     q and -q denote the same rotation, so this never changes the pose -- it only
-    picks a consistent representative.
+    picks a consistent representative. Chaining to the previous frame is what
+    makes the state sequence continuous; _QUAT_REF (when loaded) only seeds the
+    very first frame, so a model trained with a fixed convention still starts on
+    the side it expects.
     """
-    if _QUAT_REF is None:
-        return quat
-    return -quat if float(np.dot(quat, _QUAT_REF[arm])) < 0.0 else quat
+    prev = _PREV_QUAT.get(arm)
+    if prev is None:
+        anchor = None if _QUAT_REF is None else _QUAT_REF[arm]
+    else:
+        anchor = prev
+    if anchor is not None and float(np.dot(quat, anchor)) < 0.0:
+        quat = -quat
+    _PREV_QUAT[arm] = quat
+    return quat
 
 
 def state_34d_to_25d(state):
