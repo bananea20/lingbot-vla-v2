@@ -55,6 +55,25 @@ def _get_task_name(tasks, task_idx):
     return tasks[task_idx]
 
 
+def _coarse_task_index(task_index):
+    """Read a scalar task id or Astribot's [coarse, fine] task id pair.
+
+    Native Astribot metadata names these two fields coarse_instruction and
+    fine_instruction; meta/tasks.jsonl maps the coarse id to the task prompt.
+    Reject other shapes instead of silently flattening unrelated layouts.
+    """
+    value = torch.as_tensor(task_index)
+    if value.ndim == 0:
+        result = value.item()
+    elif value.ndim == 1 and value.shape[0] in (1, 2):
+        result = value[0].item()
+    else:
+        raise ValueError(f"task_index must be scalar, [1], or [2], got shape {tuple(value.shape)}")
+    if isinstance(result, bool) or not isinstance(result, int):
+        raise ValueError(f"task_index must contain integer task ids, got {value.dtype}")
+    return result
+
+
 def _resolve_lerobot_location(repo_id):
     repo_path = Path(repo_id).expanduser()
     if repo_path.exists():
@@ -151,7 +170,7 @@ class LeRobotDataset(BaseLeRobotDataset):
             for cam in image_keys:
                 item[cam] = self.image_transforms(item[cam])
         # Add task as a string
-        task_idx = item["task_index"].item()
+        task_idx = _coarse_task_index(item["task_index"])
         item["task"] = _get_task_name(self.meta.tasks, task_idx)
 
         return item

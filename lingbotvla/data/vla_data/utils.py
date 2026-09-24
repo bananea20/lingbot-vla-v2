@@ -13,6 +13,7 @@ import torch.nn.functional as F
 from ...utils import logging as logging_utils
 from .transform import Normalizer, prepare_images, prepare_state, prepare_language, prepare_action, expert_visual_transform
 from .ee_pose_transform import *
+from .pi05_io import Pi05IO
 from typing import Dict, List, Optional
 import ast
 import torch.nn.functional as F
@@ -84,6 +85,11 @@ class FeatureTransform:
             robot_config = yaml.safe_load(f)
         f.close()
 
+        # Native pi0.5 state/action processing is an explicit robot format.
+        # Remove its metadata before the legacy feature-mapping parser runs.
+        pi05_config = robot_config.pop('pi05_io', None)
+        self.pi05_io = Pi05IO(pi05_config) if pi05_config is not None else None
+
         if norm_stats_path is None:
             norm_stats_path = robot_config.pop('norm_stats')
         else:
@@ -130,6 +136,25 @@ class FeatureTransform:
 
         self.org_features = org_features
 
+        if self.pi05_io is not None:
+            if len(self.states) != 1 or len(self.actions) != 1:
+                raise ValueError('pi05_io requires one packed state feature and one packed action feature')
+            if any(self.action_subtract_state.values()):
+                raise ValueError('pi05_io handles relative actions; feature subtract_state must be false')
+            self.pi05_state_key, self.pi05_action_key = self.states[0], self.actions[0]
+            for key in (self.pi05_state_key, self.pi05_action_key):
+                if not isinstance(self.key_mapping[key]['origin_keys'], str):
+                    raise ValueError('pi05_io origin_keys must name the complete native vector')
+            if not return_item_befor_padding:
+                if len(self.feature_config.joints) != 1:
+                    raise ValueError('pi05_io expects one packed feature; model_indices defines its model slots')
+                for key in (self.pi05_state_key, self.pi05_action_key):
+                    name = key.split('observation.state.')[-1].split('action.')[-1]
+                    if self.feature_config.joints_max_dim[name] != self.pi05_io.action_max_dim:
+                        raise ValueError('pi05_io action_max_dim must match the packed feature width')
+                self.pi05_io.model_mask(model_config.max_state_dim)
+                self.pi05_io.model_mask(model_config.max_action_dim)
+
         self.normalizer = self.get_normalizer(norm_stats_path, do_nomalize, data_config)
 
     def get_normalizer(self, norm_stats_path, do_nomalize, data_config):
@@ -156,6 +181,15 @@ class FeatureTransform:
         with open(norm_stats_path) as f:
             norm_stats = json.load(f)
         f.close()
+
+        if self.pi05_io is not None:
+            for key in (self.pi05_state_key, self.pi05_action_key):
+                stats = norm_stats['norm_stats'].get(key)
+                if stats is None or any(
+                    np.asarray(stats.get(name, [])).shape != (self.pi05_io.action_max_dim,)
+                    for name in ('q01', 'q99')
+                ):
+                    raise ValueError(f'{key}: expected packed pi05_io normalization statistics, width {self.pi05_io.action_max_dim}')
 
         normalizer = Normalizer(
             norm_stats=norm_stats['norm_stats'],
@@ -380,6 +414,16 @@ class FeatureTransform:
             item['action_is_pad'] = torch.zeros(self.chunk_size)
         item = self.convert_features(item, w_action=w_action)
 
+        pi05_raw_state = None
+        if self.pi05_io is not None:
+            pi05_raw_state = torch.as_tensor(item[self.pi05_state_key]).float().clone()
+            state_value, action_value = self.pi05_io.preprocess(
+                pi05_raw_state, item.get(self.pi05_action_key) if w_action else None,
+            )
+            item[self.pi05_state_key] = state_value
+            if w_action:
+                item[self.pi05_action_key] = action_value
+
 
         for action_feature in self.actions:
             if self.action_subtract_state[action_feature] and w_action:
@@ -411,6 +455,15 @@ class FeatureTransform:
             return item
 
         batch_dict = self.pad_and_concat(item, w_action)
+
+        if self.pi05_io is not None:
+            # Normalize in the pi0.5 physical layout, then scatter into the
+            # pretrained model's slots. The mapping is deliberately nonmonotonic.
+            batch_dict['state'] = self.pi05_io.pack_model(batch_dict['state'], self.model_config.max_state_dim)
+            batch_dict['action'] = self.pi05_io.pack_model(batch_dict['action'], self.model_config.max_action_dim)
+            batch_dict['state_joint_mask'] = self.pi05_io.model_mask(self.model_config.max_state_dim)
+            batch_dict['action_joint_mask'] = self.pi05_io.model_mask(self.model_config.max_action_dim)
+            batch_dict['chunk_joint_mask'] = batch_dict['action_joint_mask'].unsqueeze(0).repeat(self.chunk_size, 1)
 
         state = prepare_state(batch_dict, self.model_config.max_state_dim) 
         actions = prepare_action(batch_dict, self.model_config.max_action_dim)
@@ -484,6 +537,10 @@ class FeatureTransform:
                 'state_joint_mask': state_joint_mask,
                 'action_joint_mask': action_joint_mask,
             }
+        if pi05_raw_state is not None:
+            # Output restoration must use the unmodified observation. A state
+            # reconstructed from clipped normalization can shift every target.
+            batch_dict['pi05_raw_state'] = pi05_raw_state
         if image_grid_thw is not None:
             batch_dict['image_grid_thw'] = image_grid_thw
 
@@ -495,11 +552,21 @@ class FeatureTransform:
         return batch_dict
 
     def unapply(self, item):
+        pi05_raw_state = item.get('pi05_raw_state')
         if not self.return_item_befor_padding:
             item = self.reverse_pad_and_concat(item)
 
         if self.normalizer is not None:
             item = self.normalizer.unnormalize(item)
+
+        if self.pi05_io is not None:
+            if pi05_raw_state is None:
+                raise ValueError('pi05_io output restoration requires the original pi05_raw_state')
+            item[self.pi05_action_key] = self.pi05_io.postprocess(
+                pi05_raw_state, item[self.pi05_action_key],
+            )
+            item[self.pi05_state_key] = pi05_raw_state
+            return self.reverse_features(item)
 
         for action_feature in self.actions:
             if self.action_subtract_state[action_feature]:
@@ -526,6 +593,13 @@ class FeatureTransform:
         return item
 
     def reverse_pad_and_concat(self, item):
+        if self.pi05_io is not None:
+            # Boolean-mask selection sorts by model index, which would scramble
+            # SO3 components. Gather in the original packed coordinate order.
+            return {
+                self.pi05_state_key: self.pi05_io.unpack_model(item['state']),
+                self.pi05_action_key: self.pi05_io.unpack_model(item['actions']),
+            }
         reverse_item = {}
 
         # In policy_eval, model output `actions` is always padded to max_action_dim

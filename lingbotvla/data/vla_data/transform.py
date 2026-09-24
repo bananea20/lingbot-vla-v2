@@ -47,6 +47,19 @@ class Normalizer:
     ):  
         self.norm_stats = dict_apply(lambda x: np.array(x), norm_stats)
         self.norm_type = norm_type or {}
+        # Pi05 BaseProcessor sanitizes statistics once when loading them.
+        # Preserve that behavior, especially for constant gripper/pose axes.
+        for key, stats in self.norm_stats.items():
+            if self.norm_type.get(key) != 'pi05_quantile':
+                continue
+            for name in ('mean', 'std', 'q01', 'q99', 'min', 'max'):
+                if name in stats:
+                    stats[name] = stats[name].astype(np.float32)
+            if 'std' in stats:
+                stats['std'] = np.where(stats['std'] == 0, 1e-4, stats['std'])
+            if 'q01' not in stats or 'q99' not in stats:
+                raise ValueError(f'{key}: pi05_quantile requires q01 and q99 statistics')
+            stats['q99'] = np.where(stats['q99'] == stats['q01'], stats['q01'] + 1e-4, stats['q99'])
 
     def _get_stat(self, key: str, stat_name: str, value):
         stat = self.norm_stats[key][stat_name]
@@ -86,6 +99,12 @@ class Normalizer:
                     high = self._get_stat(key, "q98", value)
                     normalized_value = (value  - low) / (high - low + 1e-6) * 2.0 - 1.0
                     normalized_value = torch.clamp(normalized_value, min=-1.5, max=1.5)
+                elif norm_type == "pi05_quantile":
+                    low = torch.as_tensor(self._get_stat(key, "q01", value), dtype=value.dtype, device=value.device)
+                    high = torch.as_tensor(self._get_stat(key, "q99", value), dtype=value.dtype, device=value.device)
+                    scale = high - low
+                    scale = torch.where(scale == 0.0, 1e-6, scale)
+                    normalized_value = (((value - low) / scale) * 2.0 - 1.0).clamp(-1.1, 1.1)
                 elif norm_type == "bounds_99":
                     low = self._get_stat(key, "q01", value)
                     high = self._get_stat(key, "q99", value)
@@ -157,6 +176,11 @@ class Normalizer:
                     low = self._get_stat(key, "q02", value)
                     high = self._get_stat(key, "q98", value)
                     unnormalized_value = ((value + 1.0) / 2.0) * (high - low + 1e-6) + low
+                elif norm_type == "pi05_quantile":
+                    low = torch.as_tensor(self._get_stat(key, "q01", value), dtype=value.dtype, device=value.device)
+                    high = torch.as_tensor(self._get_stat(key, "q99", value), dtype=value.dtype, device=value.device)
+                    scale = high - low
+                    unnormalized_value = (value + 1.0) / 2.0 * scale + low
                 elif norm_type == "bounds_99" or norm_type == "bounds_99_woclip":
                     low = self._get_stat(key, "q01", value)
                     high = self._get_stat(key, "q99", value)

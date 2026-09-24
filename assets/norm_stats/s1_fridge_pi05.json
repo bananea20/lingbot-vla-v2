@@ -1,0 +1,2061 @@
+{
+  "norm_stats": {
+    "observation.state.robot.position": {
+      "mean": [
+        -0.012058591151422524,
+        -1.3106444350748162e-06,
+        1.2025157907160438,
+        0.9779309531291698,
+        0.03355178442869357,
+        0.044297729286979046,
+        -0.033395176234991136,
+        0.9800447589543018,
+        -3.510496769299175e-06,
+        0.35684180877195487,
+        0.16228171880377304,
+        0.9760812255879286,
+        0.3713083798308346,
+        -0.8167917806996987,
+        -0.026057599752012894,
+        0.8162926395809759,
+        0.37045930340387534,
+        0.03216463691824628,
+        0.03593041898785448,
+        0.3686350507836918,
+        -0.2089979420935595,
+        0.9789406927371954,
+        -0.10996456219144816,
+        -0.9324944502124052,
+        0.01619595603131224,
+        0.9333907425904875,
+        -0.10779541696615774,
+        0.02418117584724738,
+        73.1017527095758,
+        1.2882451100693562,
+        2.076957631728596,
+        -0.28322045184459504
+      ],
+      "std": [
+        0.023847860946874303,
+        8.759806968146477e-08,
+        0.004727843015740957,
+        0.06232125857795538,
+        0.18525157715728235,
+        0.04858997614690738,
+        0.1858602966640382,
+        0.06207264814878081,
+        1.7851446583874968e-07,
+        0.05619470068647609,
+        0.11501398036910279,
+        0.05396941507955865,
+        0.3406282093604219,
+        0.26655668662373877,
+        0.08498390763964134,
+        0.2699154317944825,
+        0.3401669417037826,
+        0.08260638302956474,
+        1.5268254076582937,
+        0.11180317978745971,
+        0.0842958189831401,
+        0.07518300833112108,
+        0.30177692932768774,
+        0.12652497978916113,
+        0.10498443890665124,
+        0.12611791653717505,
+        0.30220720651286564,
+        0.09665531613538347,
+        43.903738292820115,
+        0.6980123719168116,
+        1.186785588973132,
+        0.19928503351127844
+      ],
+      "min": [
+        -0.11522434651851654,
+        -1.6895932049010298e-06,
+        1.1795146465301514,
+        0.18038684129714966,
+        -0.6319688558578491,
+        -0.1849076896905899,
+        -0.9833349585533142,
+        0.18180318176746368,
+        -4.352397809270769e-06,
+        0.08875323832035065,
+        -0.5718141794204712,
+        0.8232539296150208,
+        -0.4806358218193054,
+        -1.0,
+        -0.41609400510787964,
+        -0.5963778495788574,
+        -0.47832033038139343,
+        -0.3155616521835327,
+        -0.27014267444610596,
+        -0.15028280019760132,
+        -0.4728192090988159,
+        0.7572232484817505,
+        -0.9999191761016846,
+        -1.0,
+        -0.4275566041469574,
+        -0.07419167459011078,
+        -0.9962558746337891,
+        -0.48543494939804077,
+        -0.3710627257823944,
+        -1.985141634941101,
+        -0.9698734879493713,
+        -0.593284547328949
+      ],
+      "max": [
+        0.1389753669500351,
+        -7.558657557638071e-07,
+        1.2289726734161377,
+        1.0,
+        0.975807785987854,
+        0.33896973729133606,
+        0.6325114965438843,
+        1.0,
+        -2.413080892438302e-06,
+        0.6058550477027893,
+        0.43747058510780334,
+        1.2114216089248657,
+        0.9999953508377075,
+        0.608237624168396,
+        0.5586914420127869,
+        1.0,
+        0.9999979734420776,
+        0.44230756163597107,
+        96.6152572631836,
+        0.8765904307365417,
+        0.25936806201934814,
+        1.2462074756622314,
+        0.9842002391815186,
+        0.06971930712461472,
+        0.571111261844635,
+        1.0,
+        0.9943940043449402,
+        0.6235656142234802,
+        100.0,
+        2.3196492195129395,
+        4.300917625427246,
+        0.051623471081256866
+      ],
+      "q01": [
+        -0.0771452294409275,
+        -1.5497208330202738e-06,
+        1.1906031361579894,
+        0.6437961212277412,
+        -0.3924101362228394,
+        -0.05928188270032406,
+        -0.764872517824173,
+        0.6444116627961397,
+        -3.891228246448009e-06,
+        0.20323957891762257,
+        -0.3184837035238743,
+        0.8682813804149627,
+        -0.12528434038162234,
+        -1.0,
+        -0.2244511862039566,
+        -0.17844612855911257,
+        -0.12618491041064261,
+        -0.15565124806761743,
+        -0.03761771459579466,
+        0.03558125460147857,
+        -0.3865675485610962,
+        0.8150211841344833,
+        -0.8931735515594482,
+        -1.0,
+        -0.24340224965810775,
+        0.41714359736740586,
+        -0.8748262320160866,
+        -0.2691798394918442,
+        -0.06994953760504719,
+        -1.6769186097621918,
+        -0.16238828938007366,
+        -0.5424657954782247
+      ],
+      "q99": [
+        0.05417434253692627,
+        -1.0673572327959846e-06,
+        1.2167961071968079,
+        0.9998360773682594,
+        0.7632597139358521,
+        0.202132953363657,
+        0.3956284062266351,
+        0.9998363606363535,
+        -2.930490645849204e-06,
+        0.49643630483746526,
+        0.3252381192922592,
+        1.1410079918980598,
+        0.9940728261470793,
+        0.1643640398979187,
+        0.23759711573123932,
+        0.9996807244300843,
+        0.9926063819229602,
+        0.2304073294520378,
+        -0.018240634608268746,
+        0.7067455983400345,
+        0.047033753395080646,
+        1.1822483387470246,
+        0.7183282375335693,
+        -0.4093009986057877,
+        0.30446694162487986,
+        0.9997851616650819,
+        0.7483496793031692,
+        0.2704598347663879,
+        99.97992578745485,
+        2.174147288632393,
+        4.201826752495765,
+        0.04839893098920589
+      ],
+      "q02": [
+        -0.06753648027181625,
+        -1.5144259354428869e-06,
+        1.1926111320495605,
+        0.7724753871440887,
+        -0.3319577344894409,
+        -0.04251780503690242,
+        -0.6330194470882415,
+        0.7743413175314665,
+        -3.829557968492736e-06,
+        0.22806046576797961,
+        -0.2189682257413864,
+        0.8855160253763199,
+        -0.0817537839055062,
+        -1.0,
+        -0.19852189331054687,
+        -0.07723577289581296,
+        -0.08035704299211505,
+        -0.1301868424832821,
+        -0.03761771459579466,
+        0.09945276956558227,
+        -0.36635917987823485,
+        0.8224537443876266,
+        -0.8403959751129151,
+        -1.0,
+        -0.208448874348402,
+        0.49770797296166425,
+        -0.8210786852836609,
+        -0.21727861311435698,
+        -0.04987532505989073,
+        -1.4685667324066163,
+        -0.00321039775609977,
+        -0.5424657954782247
+      ],
+      "q98": [
+        0.04273535543084145,
+        -1.1093749680071597e-06,
+        1.2141748317718506,
+        0.9998360773682594,
+        0.6314220293045045,
+        0.1766725104123354,
+        0.333903071641922,
+        0.9998363606363535,
+        -3.0239657212405292e-06,
+        0.47399408631026746,
+        0.2975837167441845,
+        1.1178731982111931,
+        0.9845967866420744,
+        0.06304506957530975,
+        0.1892477575540542,
+        0.9993614488601683,
+        0.9855104540646076,
+        0.20221459469795222,
+        -0.018240634608268746,
+        0.6771716492891311,
+        0.008081390571594294,
+        1.1713928889036178,
+        0.5980906009674074,
+        -0.491883329115808,
+        0.25253621259331704,
+        0.999570323330164,
+        0.606217277944088,
+        0.2241036112070084,
+        99.97992578745485,
+        2.1035487186193462,
+        4.073219449329376,
+        0.04839893098920589
+      ],
+      "count": 448026
+    },
+    "action.robot.position": {
+      "mean": [
+        -0.00014572431352041806,
+        3.116255054243581e-05,
+        -1.6708427261761985e-05,
+        0.9951108947931242,
+        0.0004487419041267128,
+        0.00014995410347559205,
+        -0.0004288591096274675,
+        0.9953531711847613,
+        0.00047228712774910947,
+        -0.0016292213374521811,
+        0.0018214771907599109,
+        0.0004522183139863491,
+        0.9862081372128778,
+        0.001133205804511434,
+        -0.0007442883697010361,
+        -0.0008700048910699241,
+        0.9865114243859072,
+        -0.0010927011820151564,
+        0.03598881950497496,
+        -0.001125930718502191,
+        0.0023107774257661983,
+        0.0003790565822082052,
+        0.9879295891950218,
+        0.0008444824914185891,
+        -0.0007442584918060179,
+        -0.00025042942162454993,
+        0.9872428351776626,
+        -0.0008023416978970459,
+        73.10179290589281,
+        -0.0029659565565991084,
+        0.009674691094833291,
+        -1.0447318292119895e-05
+      ],
+      "std": [
+        0.009066887542907744,
+        0.0036185349754946014,
+        0.002333467790542657,
+        0.019643521109807528,
+        0.09417432615624483,
+        0.022350336093636465,
+        0.09408482140339193,
+        0.019369508688690834,
+        0.006681428164224347,
+        0.02728774823787911,
+        0.049098741575743565,
+        0.019043120377766957,
+        0.04803310260896465,
+        0.15219142530853336,
+        0.04384521494042704,
+        0.152554308612566,
+        0.04639158015103414,
+        0.036991877245329895,
+        1.5268213415761278,
+        0.038237159983261715,
+        0.05621766619086633,
+        0.03404542537038705,
+        0.04015213431588406,
+        0.14128799373492895,
+        0.0491884371269358,
+        0.14230737190054107,
+        0.03961782290206685,
+        0.05941420289109155,
+        43.90367131178194,
+        0.042931148646096234,
+        0.05863536529460508,
+        0.0007388878204813698
+      ],
+      "min": [
+        -0.12014640122652054,
+        -0.16495703160762787,
+        -0.052517883479595184,
+        0.3011019229888916,
+        -0.9534980058670044,
+        -0.29145562648773193,
+        -0.746711015701294,
+        0.3013899624347687,
+        -0.08020424842834473,
+        -0.3228203058242798,
+        -0.47149381041526794,
+        -0.22285084426403046,
+        -0.2967933118343353,
+        -0.9921934008598328,
+        -0.6028537750244141,
+        -0.8611468076705933,
+        -0.16099312901496887,
+        -0.508033037185669,
+        0.0,
+        -0.24956904351711273,
+        -0.3815532326698303,
+        -0.2527438998222351,
+        -0.08006158471107483,
+        -0.9869824647903442,
+        -0.5972065925598145,
+        -0.8969942331314087,
+        0.03137294948101044,
+        -0.4930723011493683,
+        0.0,
+        -0.4118940830230713,
+        -0.521249532699585,
+        -0.09253749251365662
+      ],
+      "max": [
+        0.11732518672943115,
+        0.08144494891166687,
+        0.02384824864566326,
+        1.0000003576278687,
+        0.745291531085968,
+        0.2500709891319275,
+        0.952881395816803,
+        1.0000003576278687,
+        0.20518626272678375,
+        0.2592580020427704,
+        0.6662787795066833,
+        0.24316228926181793,
+        1.0000003576278687,
+        0.856844961643219,
+        0.4290975332260132,
+        0.9995960593223572,
+        1.0000003576278687,
+        0.4423193335533142,
+        96.6152572631836,
+        0.38989755511283875,
+        0.4582834839820862,
+        0.31496113538742065,
+        1.0000003576278687,
+        0.9356791377067566,
+        0.4015654921531677,
+        0.9818257689476013,
+        1.0000003576278687,
+        0.5384762287139893,
+        100.0,
+        0.40793752670288086,
+        0.5081648826599121,
+        0.003358781337738037
+      ],
+      "q01": [
+        -0.029479748944938183,
+        -0.008787456354498846,
+        -0.008103341035544873,
+        0.906208187699318,
+        -0.3670758577108384,
+        -0.07603633879423141,
+        -0.3078762550473213,
+        0.908342673778534,
+        -0.012966244000196456,
+        -0.09941865126490593,
+        -0.14745617680549622,
+        -0.06161030006408691,
+        0.7782486401498319,
+        -0.5646957314491272,
+        -0.15828915143013,
+        -0.4640642798542976,
+        0.7842877678096294,
+        -0.1324537802696228,
+        0.0,
+        -0.11694367096126079,
+        -0.16403552305698396,
+        -0.11127180504798889,
+        0.7872281549870968,
+        -0.5047789348840713,
+        -0.17692329931259154,
+        -0.4701263286590576,
+        0.7890333081334829,
+        -0.1970178730785847,
+        0.0,
+        -0.16938789286613465,
+        -0.18401337022781372,
+        -1.676750183106368e-05
+      ],
+      "q99": [
+        0.028083363975584502,
+        0.011171104067564025,
+        0.006864420861005784,
+        0.9998605779409409,
+        0.3063243147373198,
+        0.06800974096059798,
+        0.3655022583961487,
+        0.9998606355488301,
+        0.026588880845904356,
+        0.08556583497524262,
+        0.19637869986891743,
+        0.06794135105609894,
+        0.9997409988939763,
+        0.46447902112007156,
+        0.12714858043193822,
+        0.5664151198863983,
+        0.99976815893054,
+        0.10551445336341858,
+        0.0,
+        0.13973822172880174,
+        0.21405896677970881,
+        0.12421224355697635,
+        0.9997843452394009,
+        0.4707795622229576,
+        0.1458798384666442,
+        0.5147511164307594,
+        0.9998066321462393,
+        0.19682735562324516,
+        99.98,
+        0.1429679504394531,
+        0.24216419773101805,
+        -1.676750183106368e-05
+      ],
+      "q02": [
+        -0.021975646765530113,
+        -0.005091426646709446,
+        -0.005751264166086914,
+        0.9411531094312668,
+        -0.2539364745497704,
+        -0.0535088315844536,
+        -0.23819296617507935,
+        0.9427143052220345,
+        -0.008628308230638496,
+        -0.07625193461179733,
+        -0.11081989941000941,
+        -0.04483382725715637,
+        0.8532033142447473,
+        -0.4304555463314056,
+        -0.11474080622196198,
+        -0.38144729655981063,
+        0.8567337613761425,
+        -0.098621235871315,
+        0.0,
+        -0.09596916652619839,
+        -0.13312953188419344,
+        -0.08879068565368653,
+        0.8593762927353382,
+        -0.3886501740932464,
+        -0.12558641415834426,
+        -0.3619062965393066,
+        0.8589682070016861,
+        -0.15740640953183177,
+        0.0,
+        -0.1344630662918091,
+        -0.11854261341094974,
+        -1.676750183106368e-05
+      ],
+      "q98": [
+        0.02129167656004427,
+        0.006440186041593549,
+        0.005153819501399995,
+        0.9998605779409409,
+        0.23701370162963853,
+        0.04862308812141419,
+        0.25264932227134707,
+        0.9998606355488301,
+        0.014545401275157938,
+        0.0661244194924831,
+        0.12515413573980327,
+        0.04669115216732023,
+        0.9997409988939763,
+        0.382381717824936,
+        0.09887311458587644,
+        0.4313251877427102,
+        0.99976815893054,
+        0.08023508030176163,
+        0.0,
+        0.10162601245045666,
+        0.1697155881404876,
+        0.10036863207817076,
+        0.9997843452394009,
+        0.361187850880623,
+        0.11112256991863245,
+        0.39337934429645527,
+        0.9998066321462393,
+        0.15102660089731212,
+        99.98,
+        0.10919088811874389,
+        0.19563466615676883,
+        -1.676750183106368e-05
+      ],
+      "count": 22401300
+    }
+  },
+  "metadata": {
+    "format_version": 1,
+    "created_at_utc": "2026-09-24T10:47:22.390123+00:00",
+    "feature_layout": "pi05_packed_physical_before_model_adapter",
+    "pi05_io": {
+      "action_valid_dim": {
+        "torso": [
+          0,
+          9
+        ],
+        "left_arm": [
+          9,
+          18
+        ],
+        "left_gripper": [
+          18,
+          19
+        ],
+        "right_arm": [
+          19,
+          28
+        ],
+        "right_gripper": [
+          28,
+          29
+        ],
+        "chassis": [
+          31,
+          34
+        ]
+      },
+      "action_max_dim": 32,
+      "action_mode": "delta_so3",
+      "action_delta_mask": [
+        9,
+        9,
+        -1,
+        9,
+        -1,
+        3
+      ],
+      "state_axis": "base",
+      "action_axis": "self",
+      "model_indices": [
+        30,
+        39,
+        31,
+        32,
+        33,
+        40,
+        41,
+        42,
+        43,
+        14,
+        15,
+        16,
+        17,
+        18,
+        19,
+        20,
+        51,
+        52,
+        28,
+        21,
+        22,
+        23,
+        24,
+        25,
+        26,
+        27,
+        53,
+        54,
+        29,
+        36,
+        37,
+        38
+      ]
+    },
+    "robot_config": "/kpfs-cognition/baifu/workspace/lingbot-vla-v2/configs/robot_configs/s1_fridge_pi05.yaml",
+    "robot_config_sha256": "e878d5ce38989c38c9703641a72060e22cfe5628265f258f376054183af28aa6",
+    "train_list": "/kpfs-cognition/baifu/workspace/lingbot-vla-v2/assets/training_data/s1_fridge_pi05.txt",
+    "native_state_column": "cartesian_so3_dict.cartesian_pose_state",
+    "native_action_column": "cartesian_so3_dict.cartesian_pose_command",
+    "chunk_size": 50,
+    "chunk_offsets": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9,
+      10,
+      11,
+      12,
+      13,
+      14,
+      15,
+      16,
+      17,
+      18,
+      19,
+      20,
+      21,
+      22,
+      23,
+      24,
+      25,
+      26,
+      27,
+      28,
+      29,
+      30,
+      31,
+      32,
+      33,
+      34,
+      35,
+      36,
+      37,
+      38,
+      39,
+      40,
+      41,
+      42,
+      43,
+      44,
+      45,
+      46,
+      47,
+      48,
+      49
+    ],
+    "episode_boundary": "repeat_last_action_including_padding_in_statistics",
+    "quantile_estimator": "RunningStats_dynamic_histogram_5000_bins",
+    "normalization_scope": "pooled_over_all_chunk_positions",
+    "batch_size": 256,
+    "anchor_stride": 1,
+    "max_episodes": null,
+    "available_episodes": 226,
+    "processed_episodes": 226,
+    "processed_episode_rows": 448026,
+    "state_vectors": 448026,
+    "action_vectors": 22401300,
+    "full_coverage": true,
+    "episodes": [
+      {
+        "root": "/kpfs-cognition/baifu/workspace/lingbot-vla-v2/data/open_refrigerator_with_move/20260812_Cognition_Open_refrigerator_with_move_S1_30_1/lerobot_so3_data_30hz",
+        "path": "data/chunk-000/episode_000000.parquet",
+        "rows": 1831,
+        "anchors": 1831
+      },
+      {
+        "root": "/kpfs-cognition/baifu/workspace/lingbot-vla-v2/data/open_refrigerator_with_move/20260812_Cognition_Open_refrigerator_with_move_S1_30_1/lerobot_so3_data_30hz",
+        "path": "data/chunk-000/episode_000001.parquet",
+        "rows": 1831,
+        "anchors": 1831
+      },
+      {
+        "root": "/kpfs-cognition/baifu/workspace/lingbot-vla-v2/data/open_refrigerator_with_move/20260812_Cognition_Open_refrigerator_with_move_S1_30_1/lerobot_so3_data_30hz",
+        "path": "data/chunk-000/episode_000002.parquet",
+        "rows": 2191,
+        "anchors": 2191
+      },
+      {
+        "root": "/kpfs-cognition/baifu/workspace/lingbot-vla-v2/data/open_refrigerator_with_move/20260812_Cognition_Open_refrigerator_with_move_S1_30_1/lerobot_so3_data_30hz",
+        "path": "data/chunk-000/episode_000003.parquet",
+        "rows": 1712,
+        "anchors": 1712
+      },
+      {
+        "root": "/kpfs-cognition/baifu/workspace/lingbot-vla-v2/data/open_refrigerator_with_move/20260812_Cognition_Open_refrigerator_with_move_S1_30_1/lerobot_so3_data_30hz",
+        "path": "data/chunk-000/episode_000004.parquet",
+        "rows": 1892,
+        "anchors": 1892
+      },
+      {
+        "root": "/kpfs-cognition/baifu/workspace/lingbot-vla-v2/data/open_refrigerator_with_move/20260812_Cognition_Open_refrigerator_with_move_S1_30_1/lerobot_so3_data_30hz",
+        "path": "data/chunk-000/episode_000005.parquet",
+        "rows": 1704,
+        "anchors": 1704
+      },
+      {
+        "root": "/kpfs-cognition/baifu/workspace/lingbot-vla-v2/data/open_refrigerator_with_move/20260812_Cognition_Open_refrigerator_with_move_S1_30_1/lerobot_so3_data_30hz",
+        "path": "data/chunk-000/episode_000006.parquet",
+        "rows": 1831,
+        "anchors": 1831
+      },
+      {
+        "root": "/kpfs-cognition/baifu/workspace/lingbot-vla-v2/data/open_refrigerator_with_move/20260812_Cognition_Open_refrigerator_with_move_S1_30_1/lerobot_so3_data_30hz",
+        "path": "data/chunk-000/episode_000007.parquet",
+        "rows": 1825,
+        "anchors": 1825
+      },
+      {
+        "root": "/kpfs-cognition/baifu/workspace/lingbot-vla-v2/data/open_refrigerator_with_move/20260812_Cognition_Open_refrigerator_with_move_S1_30_1/lerobot_so3_data_30hz",
+        "path": "data/chunk-000/episode_000008.parquet",
+        "rows": 2042,
+        "anchors": 2042
+      },
+      {
+        "root": "/kpfs-cognition/baifu/workspace/lingbot-vla-v2/data/open_refrigerator_with_move/20260812_Cognition_Open_refrigerator_with_move_S1_30_1/lerobot_so3_data_30hz",
+        "path": "data/chunk-000/episode_000009.parquet",
+        "rows": 2003,
+        "anchors": 2003
+      },
+      {
+        "root": "/kpfs-cognition/baifu/workspace/lingbot-vla-v2/data/open_refrigerator_with_move/20260812_Cognition_Open_refrigerator_with_move_S1_30_1/lerobot_so3_data_30hz",
+        "path": "data/chunk-000/episode_000010.parquet",
+        "rows": 2041,
+        "anchors": 2041
+      },
+      {
+        "root": "/kpfs-cognition/baifu/workspace/lingbot-vla-v2/data/open_refrigerator_with_move/20260812_Cognition_Open_refrigerator_with_move_S1_30_1/lerobot_so3_data_30hz",
+        "path": "data/chunk-000/episode_000011.parquet",
+        "rows": 1952,
+        "anchors": 1952
+      },
+      {
+        "root": "/kpfs-cognition/baifu/workspace/lingbot-vla-v2/data/open_refrigerator_with_move/20260812_Cognition_Open_refrigerator_with_move_S1_30_1/lerobot_so3_data_30hz",
+        "path": "data/chunk-000/episode_000012.parquet",
+        "rows": 1772,
+        "anchors": 1772
+      },
+      {
+        "root": "/kpfs-cognition/baifu/workspace/lingbot-vla-v2/data/open_refrigerator_with_move/20260812_Cognition_Open_refrigerator_with_move_S1_30_1/lerobot_so3_data_30hz",
+        "path": "data/chunk-000/episode_000013.parquet",
+        "rows": 1649,
+        "anchors": 1649
+      },
+      {
+        "root": "/kpfs-cognition/baifu/workspace/lingbot-vla-v2/data/open_refrigerator_with_move/20260812_Cognition_Open_refrigerator_with_move_S1_30_1/lerobot_so3_data_30hz",
+        "path": "data/chunk-000/episode_000014.parquet",
+        "rows": 1891,
+        "anchors": 1891
+      },
+      {
+        "root": "/kpfs-cognition/baifu/workspace/lingbot-vla-v2/data/open_refrigerator_with_move/20260812_Cognition_Open_refrigerator_with_move_S1_30_1/lerobot_so3_data_30hz",
+        "path": "data/chunk-000/episode_000015.parquet",
+        "rows": 1950,
+        "anchors": 1950
+      },
+      {
+        "root": "/kpfs-cognition/baifu/workspace/lingbot-vla-v2/data/open_refrigerator_with_move/20260812_Cognition_Open_refrigerator_with_move_S1_30_1/lerobot_so3_data_30hz",
+        "path": "data/chunk-000/episode_000016.parquet",
+        "rows": 1860,
+        "anchors": 1860
+      },
+      {
+        "root": "/kpfs-cognition/baifu/workspace/lingbot-vla-v2/data/open_refrigerator_with_move/20260812_Cognition_Open_refrigerator_with_move_S1_30_1/lerobot_so3_data_30hz",
+        "path": "data/chunk-000/episode_000017.parquet",
+        "rows": 1770,
+        "anchors": 1770
+      },
+      {
+        "root": "/kpfs-cognition/baifu/workspace/lingbot-vla-v2/data/open_refrigerator_with_move/20260812_Cognition_Open_refrigerator_with_move_S1_30_1/lerobot_so3_data_30hz",
+        "path": "data/chunk-000/episode_000018.parquet",
+        "rows": 1892,
+        "anchors": 1892
+      },
+      {
+        "root": "/kpfs-cognition/baifu/workspace/lingbot-vla-v2/data/open_refrigerator_with_move/20260812_Cognition_Open_refrigerator_with_move_S1_30_1/lerobot_so3_data_30hz",
+        "path": "data/chunk-000/episode_000019.parquet",
+        "rows": 1828,
+        "anchors": 1828
+      },
+      {
+        "root": "/kpfs-cognition/baifu/workspace/lingbot-vla-v2/data/open_refrigerator_with_move/20260812_Cognition_Open_refrigerator_with_move_S1_30_1/lerobot_so3_data_30hz",
+        "path": "data/chunk-000/episode_000020.parquet",
+        "rows": 1978,
+        "anchors": 1978
+      },
+      {
+        "root": "/kpfs-cognition/baifu/workspace/lingbot-vla-v2/data/open_refrigerator_with_move/20260812_Cognition_Open_refrigerator_with_move_S1_30_1/lerobot_so3_data_30hz",
+        "path": "data/chunk-000/episode_000021.parquet",
+        "rows": 1914,
+        "anchors": 1914
+      },
+      {
+        "root": "/kpfs-cognition/baifu/workspace/lingbot-vla-v2/data/open_refrigerator_with_move/20260812_Cognition_Open_refrigerator_with_move_S1_30_1/lerobot_so3_data_30hz",
+        "path": "data/chunk-000/episode_000022.parquet",
+        "rows": 1949,
+        "anchors": 1949
+      },
+      {
+        "root": "/kpfs-cognition/baifu/workspace/lingbot-vla-v2/data/open_refrigerator_with_move/20260812_Cognition_Open_refrigerator_with_move_S1_30_1/lerobot_so3_data_30hz",
+        "path": "data/chunk-000/episode_000023.parquet",
+        "rows": 1800,
+        "anchors": 1800
+      },
+      {
+        "root": "/kpfs-cognition/baifu/workspace/lingbot-vla-v2/data/open_refrigerator_with_move/20260812_Cognition_Open_refrigerator_with_move_S1_30_1/lerobot_so3_data_30hz",
+        "path": "data/chunk-000/episode_000024.parquet",
+        "rows": 1770,
+        "anchors": 1770
+      },
+      {
+        "root": "/kpfs-cognition/baifu/workspace/lingbot-vla-v2/data/open_refrigerator_with_move/20260812_Cognition_Open_refrigerator_with_move_S1_30_1/lerobot_so3_data_30hz",
+        "path": "data/chunk-000/episode_000025.parquet",
+        "rows": 1530,
+        "anchors": 1530
+      },
+      {
+        "root": "/kpfs-cognition/baifu/workspace/lingbot-vla-v2/data/open_refrigerator_with_move/20260812_Cognition_Open_refrigerator_with_move_S1_30_1/lerobot_so3_data_30hz",
+        "path": "data/chunk-000/episode_000026.parquet",
+        "rows": 1500,
+        "anchors": 1500
+      },
+      {
+        "root": "/kpfs-cognition/baifu/workspace/lingbot-vla-v2/data/open_refrigerator_with_move/20260812_Cognition_Open_refrigerator_with_move_S1_30_1/lerobot_so3_data_30hz",
+        "path": "data/chunk-000/episode_000027.parquet",
+        "rows": 1799,
+        "anchors": 1799
+      },
+      {
+        "root": "/kpfs-cognition/baifu/workspace/lingbot-vla-v2/data/open_refrigerator_with_move/20260812_Cognition_Open_refrigerator_with_move_S1_30_1/lerobot_so3_data_30hz",
+        "path": "data/chunk-000/episode_000028.parquet",
+        "rows": 1489,
+        "anchors": 1489
+      },
+      {
+        "root": "/kpfs-cognition/baifu/workspace/lingbot-vla-v2/data/open_refrigerator_with_move/20260812_Cognition_Open_refrigerator_with_move_S1_30_1/lerobot_so3_data_30hz",
+        "path": "data/chunk-000/episode_000029.parquet",
+        "rows": 1522,
+        "anchors": 1522
+      },
+      {
+        "root": "/kpfs-cognition/baifu/workspace/lingbot-vla-v2/data/open_refrigerator_with_move/20260812_Cognition_Open_refrigerator_with_move_S1_30_1/lerobot_so3_data_30hz",
+        "path": "data/chunk-000/episode_000030.parquet",
+        "rows": 1860,
+        "anchors": 1860
+      },
+      {
+        "root": "/kpfs-cognition/baifu/workspace/lingbot-vla-v2/data/open_refrigerator_with_move/20260812_Cognition_Open_refrigerator_with_move_S1_30_1/lerobot_so3_data_30hz",
+        "path": "data/chunk-000/episode_000031.parquet",
+        "rows": 1629,
+        "anchors": 1629
+      },
+      {
+        "root": "/kpfs-cognition/baifu/workspace/lingbot-vla-v2/data/open_refrigerator_with_move/20260812_Cognition_Open_refrigerator_with_move_S1_30_1/lerobot_so3_data_30hz",
+        "path": "data/chunk-000/episode_000032.parquet",
+        "rows": 1621,
+        "anchors": 1621
+      },
+      {
+        "root": "/kpfs-cognition/baifu/workspace/lingbot-vla-v2/data/open_refrigerator_with_move/20260812_Cognition_Open_refrigerator_with_move_S1_30_1/lerobot_so3_data_30hz",
+        "path": "data/chunk-000/episode_000033.parquet",
+        "rows": 1499,
+        "anchors": 1499
+      },
+      {
+        "root": "/kpfs-cognition/baifu/workspace/lingbot-vla-v2/data/open_refrigerator_with_move/20260812_Cognition_Open_refrigerator_with_move_S1_30_1/lerobot_so3_data_30hz",
+        "path": "data/chunk-000/episode_000034.parquet",
+        "rows": 1590,
+        "anchors": 1590
+      },
+      {
+        "root": "/kpfs-cognition/baifu/workspace/lingbot-vla-v2/data/open_refrigerator_with_move/20260812_Cognition_Open_refrigerator_with_move_S1_30_1/lerobot_so3_data_30hz",
+        "path": "data/chunk-000/episode_000035.parquet",
+        "rows": 1891,
+        "anchors": 1891
+      },
+      {
+        "root": "/kpfs-cognition/baifu/workspace/lingbot-vla-v2/data/open_refrigerator_with_move/20260812_Cognition_Open_refrigerator_with_move_S1_30_1/lerobot_so3_data_30hz",
+        "path": "data/chunk-000/episode_000036.parquet",
+        "rows": 1678,
+        "anchors": 1678
+      },
+      {
+        "root": "/kpfs-cognition/baifu/workspace/lingbot-vla-v2/data/open_refrigerator_with_move/20260812_Cognition_Open_refrigerator_with_move_S1_30_1/lerobot_so3_data_30hz",
+        "path": "data/chunk-000/episode_000037.parquet",
+        "rows": 1920,
+        "anchors": 1920
+      },
+      {
+        "root": "/kpfs-cognition/baifu/workspace/lingbot-vla-v2/data/open_refrigerator_with_move/20260812_Cognition_Open_refrigerator_with_move_S1_30_1/lerobot_so3_data_30hz",
+        "path": "data/chunk-000/episode_000038.parquet",
+        "rows": 1710,
+        "anchors": 1710
+      },
+      {
+        "root": "/kpfs-cognition/baifu/workspace/lingbot-vla-v2/data/open_refrigerator_with_move/20260812_Cognition_Open_refrigerator_with_move_S1_30_1/lerobot_so3_data_30hz",
+        "path": "data/chunk-000/episode_000039.parquet",
+        "rows": 1618,
+        "anchors": 1618
+      },
+      {
+        "root": "/kpfs-cognition/baifu/workspace/lingbot-vla-v2/data/open_refrigerator_with_move/20260812_Cognition_Open_refrigerator_with_move_S1_30_1/lerobot_so3_data_30hz",
+        "path": "data/chunk-000/episode_000040.parquet",
+        "rows": 1738,
+        "anchors": 1738
+      },
+      {
+        "root": "/kpfs-cognition/baifu/workspace/lingbot-vla-v2/data/open_refrigerator_with_move/20260812_Cognition_Open_refrigerator_with_move_S1_30_1/lerobot_so3_data_30hz",
+        "path": "data/chunk-000/episode_000041.parquet",
+        "rows": 1711,
+        "anchors": 1711
+      },
+      {
+        "root": "/kpfs-cognition/baifu/workspace/lingbot-vla-v2/data/open_refrigerator_with_move/20260812_Cognition_Open_refrigerator_with_move_S1_30_1/lerobot_so3_data_30hz",
+        "path": "data/chunk-000/episode_000042.parquet",
+        "rows": 1679,
+        "anchors": 1679
+      },
+      {
+        "root": "/kpfs-cognition/baifu/workspace/lingbot-vla-v2/data/open_refrigerator_with_move/20260812_Cognition_Open_refrigerator_with_move_S1_30_1/lerobot_so3_data_30hz",
+        "path": "data/chunk-000/episode_000043.parquet",
+        "rows": 1556,
+        "anchors": 1556
+      },
+      {
+        "root": "/kpfs-cognition/baifu/workspace/lingbot-vla-v2/data/open_refrigerator_with_move/20260812_Cognition_Open_refrigerator_with_move_S1_30_1/lerobot_so3_data_30hz",
+        "path": "data/chunk-000/episode_000044.parquet",
+        "rows": 1501,
+        "anchors": 1501
+      },
+      {
+        "root": "/kpfs-cognition/baifu/workspace/lingbot-vla-v2/data/open_refrigerator_with_move/20260812_Cognition_Open_refrigerator_with_move_S1_30_1/lerobot_so3_data_30hz",
+        "path": "data/chunk-000/episode_000045.parquet",
+        "rows": 1487,
+        "anchors": 1487
+      },
+      {
+        "root": "/kpfs-cognition/baifu/workspace/lingbot-vla-v2/data/open_refrigerator_with_move/20260812_Cognition_Open_refrigerator_with_move_S1_30_1/lerobot_so3_data_30hz",
+        "path": "data/chunk-000/episode_000046.parquet",
+        "rows": 1500,
+        "anchors": 1500
+      },
+      {
+        "root": "/kpfs-cognition/baifu/workspace/lingbot-vla-v2/data/open_refrigerator_with_move/20260812_Cognition_Open_refrigerator_with_move_S1_30_1/lerobot_so3_data_30hz",
+        "path": "data/chunk-000/episode_000047.parquet",
+        "rows": 1530,
+        "anchors": 1530
+      },
+      {
+        "root": "/kpfs-cognition/baifu/workspace/lingbot-vla-v2/data/open_refrigerator_with_move/20260812_Cognition_Open_refrigerator_with_move_S1_30_1/lerobot_so3_data_30hz",
+        "path": "data/chunk-000/episode_000048.parquet",
+        "rows": 1831,
+        "anchors": 1831
+      },
+      {
+        "root": "/kpfs-cognition/baifu/workspace/lingbot-vla-v2/data/open_refrigerator_with_move/20260812_Cognition_Open_refrigerator_with_move_S1_30_1/lerobot_so3_data_30hz",
+        "path": "data/chunk-000/episode_000049.parquet",
+        "rows": 2101,
+        "anchors": 2101
+      },
+      {
+        "root": "/kpfs-cognition/baifu/workspace/lingbot-vla-v2/data/open_refrigerator_with_move/20260812_Cognition_Open_refrigerator_with_move_S1_30_1/lerobot_so3_data_30hz",
+        "path": "data/chunk-000/episode_000050.parquet",
+        "rows": 1800,
+        "anchors": 1800
+      },
+      {
+        "root": "/kpfs-cognition/baifu/workspace/lingbot-vla-v2/data/open_refrigerator_with_move/20260812_Cognition_Open_refrigerator_with_move_S1_30_1/lerobot_so3_data_30hz",
+        "path": "data/chunk-000/episode_000051.parquet",
+        "rows": 1916,
+        "anchors": 1916
+      },
+      {
+        "root": "/kpfs-cognition/baifu/workspace/lingbot-vla-v2/data/open_refrigerator_with_move/20260812_Cognition_Open_refrigerator_with_move_S1_30_1/lerobot_so3_data_30hz",
+        "path": "data/chunk-000/episode_000052.parquet",
+        "rows": 1831,
+        "anchors": 1831
+      },
+      {
+        "root": "/kpfs-cognition/baifu/workspace/lingbot-vla-v2/data/open_refrigerator_with_move/20260812_Cognition_Open_refrigerator_with_move_S1_30_1/lerobot_so3_data_30hz",
+        "path": "data/chunk-000/episode_000053.parquet",
+        "rows": 1740,
+        "anchors": 1740
+      },
+      {
+        "root": "/kpfs-cognition/baifu/workspace/lingbot-vla-v2/data/open_refrigerator_with_move/20260812_Cognition_Open_refrigerator_with_move_S1_30_1/lerobot_so3_data_30hz",
+        "path": "data/chunk-000/episode_000054.parquet",
+        "rows": 1831,
+        "anchors": 1831
+      },
+      {
+        "root": "/kpfs-cognition/baifu/workspace/lingbot-vla-v2/data/open_refrigerator_with_move/20260812_Cognition_Open_refrigerator_with_move_S1_30_1/lerobot_so3_data_30hz",
+        "path": "data/chunk-000/episode_000055.parquet",
+        "rows": 1860,
+        "anchors": 1860
+      },
+      {
+        "root": "/kpfs-cognition/baifu/workspace/lingbot-vla-v2/data/open_refrigerator_with_move/20260812_Cognition_Open_refrigerator_with_move_S1_30_1/lerobot_so3_data_30hz",
+        "path": "data/chunk-000/episode_000056.parquet",
+        "rows": 1831,
+        "anchors": 1831
+      },
+      {
+        "root": "/kpfs-cognition/baifu/workspace/lingbot-vla-v2/data/open_refrigerator_with_move/20260812_Cognition_Open_refrigerator_with_move_S1_30_1/lerobot_so3_data_30hz",
+        "path": "data/chunk-000/episode_000057.parquet",
+        "rows": 1741,
+        "anchors": 1741
+      },
+      {
+        "root": "/kpfs-cognition/baifu/workspace/lingbot-vla-v2/data/open_refrigerator_with_move/20260812_Cognition_Open_refrigerator_with_move_S1_30_1/lerobot_so3_data_30hz",
+        "path": "data/chunk-000/episode_000058.parquet",
+        "rows": 1832,
+        "anchors": 1832
+      },
+      {
+        "root": "/kpfs-cognition/baifu/workspace/lingbot-vla-v2/data/open_refrigerator_with_move/20260812_Cognition_Open_refrigerator_with_move_S1_30_1/lerobot_so3_data_30hz",
+        "path": "data/chunk-000/episode_000059.parquet",
+        "rows": 1921,
+        "anchors": 1921
+      },
+      {
+        "root": "/kpfs-cognition/baifu/workspace/lingbot-vla-v2/data/open_refrigerator_with_move/20260812_Cognition_Open_refrigerator_with_move_S1_30_1/lerobot_so3_data_30hz",
+        "path": "data/chunk-000/episode_000060.parquet",
+        "rows": 2010,
+        "anchors": 2010
+      },
+      {
+        "root": "/kpfs-cognition/baifu/workspace/lingbot-vla-v2/data/open_refrigerator_with_move/20260812_Cognition_Open_refrigerator_with_move_S1_30_1/lerobot_so3_data_30hz",
+        "path": "data/chunk-000/episode_000061.parquet",
+        "rows": 1734,
+        "anchors": 1734
+      },
+      {
+        "root": "/kpfs-cognition/baifu/workspace/lingbot-vla-v2/data/open_refrigerator_with_move/20260812_Cognition_Open_refrigerator_with_move_S1_30_1/lerobot_so3_data_30hz",
+        "path": "data/chunk-000/episode_000062.parquet",
+        "rows": 1681,
+        "anchors": 1681
+      },
+      {
+        "root": "/kpfs-cognition/baifu/workspace/lingbot-vla-v2/data/open_refrigerator_with_move/20260812_Cognition_Open_refrigerator_with_move_S1_30_1/lerobot_so3_data_30hz",
+        "path": "data/chunk-000/episode_000063.parquet",
+        "rows": 1951,
+        "anchors": 1951
+      },
+      {
+        "root": "/kpfs-cognition/baifu/workspace/lingbot-vla-v2/data/open_refrigerator_with_move/20260812_Cognition_Open_refrigerator_with_move_S1_30_1/lerobot_so3_data_30hz",
+        "path": "data/chunk-000/episode_000064.parquet",
+        "rows": 1830,
+        "anchors": 1830
+      },
+      {
+        "root": "/kpfs-cognition/baifu/workspace/lingbot-vla-v2/data/open_refrigerator_with_move/20260812_Cognition_Open_refrigerator_with_move_S1_30_1/lerobot_so3_data_30hz",
+        "path": "data/chunk-000/episode_000065.parquet",
+        "rows": 1832,
+        "anchors": 1832
+      },
+      {
+        "root": "/kpfs-cognition/baifu/workspace/lingbot-vla-v2/data/open_refrigerator_with_move/20260812_Cognition_Open_refrigerator_with_move_S1_30_1/lerobot_so3_data_30hz",
+        "path": "data/chunk-000/episode_000066.parquet",
+        "rows": 1830,
+        "anchors": 1830
+      },
+      {
+        "root": "/kpfs-cognition/baifu/workspace/lingbot-vla-v2/data/open_refrigerator_with_move/20260812_Cognition_Open_refrigerator_with_move_S1_30_1/lerobot_so3_data_30hz",
+        "path": "data/chunk-000/episode_000067.parquet",
+        "rows": 1648,
+        "anchors": 1648
+      },
+      {
+        "root": "/kpfs-cognition/baifu/workspace/lingbot-vla-v2/data/open_refrigerator_with_move/20260812_Cognition_Open_refrigerator_with_move_S1_30_1/lerobot_so3_data_30hz",
+        "path": "data/chunk-000/episode_000068.parquet",
+        "rows": 1801,
+        "anchors": 1801
+      },
+      {
+        "root": "/kpfs-cognition/baifu/workspace/lingbot-vla-v2/data/open_refrigerator_with_move/20260812_Cognition_Open_refrigerator_with_move_S1_30_1/lerobot_so3_data_30hz",
+        "path": "data/chunk-000/episode_000069.parquet",
+        "rows": 1949,
+        "anchors": 1949
+      },
+      {
+        "root": "/kpfs-cognition/baifu/workspace/lingbot-vla-v2/data/open_refrigerator_with_move/20260812_Cognition_Open_refrigerator_with_move_S1_30_1/lerobot_so3_data_30hz",
+        "path": "data/chunk-000/episode_000070.parquet",
+        "rows": 1890,
+        "anchors": 1890
+      },
+      {
+        "root": "/kpfs-cognition/baifu/workspace/lingbot-vla-v2/data/open_refrigerator_with_move/20260812_Cognition_Open_refrigerator_with_move_S1_30_1/lerobot_so3_data_30hz",
+        "path": "data/chunk-000/episode_000071.parquet",
+        "rows": 1681,
+        "anchors": 1681
+      },
+      {
+        "root": "/kpfs-cognition/baifu/workspace/lingbot-vla-v2/data/open_refrigerator_with_move/20260812_Cognition_Open_refrigerator_with_move_S1_30_1/lerobot_so3_data_30hz",
+        "path": "data/chunk-000/episode_000072.parquet",
+        "rows": 1951,
+        "anchors": 1951
+      },
+      {
+        "root": "/kpfs-cognition/baifu/workspace/lingbot-vla-v2/data/open_refrigerator_with_move/20260812_Cognition_Open_refrigerator_with_move_S1_30_1/lerobot_so3_data_30hz",
+        "path": "data/chunk-000/episode_000073.parquet",
+        "rows": 2073,
+        "anchors": 2073
+      },
+      {
+        "root": "/kpfs-cognition/baifu/workspace/lingbot-vla-v2/data/open_refrigerator_with_move/20260812_Cognition_Open_refrigerator_with_move_S1_30_1/lerobot_so3_data_30hz",
+        "path": "data/chunk-000/episode_000074.parquet",
+        "rows": 2115,
+        "anchors": 2115
+      },
+      {
+        "root": "/kpfs-cognition/baifu/workspace/lingbot-vla-v2/data/open_refrigerator_with_move/20260812_Cognition_Open_refrigerator_with_move_S1_30_1/lerobot_so3_data_30hz",
+        "path": "data/chunk-000/episode_000075.parquet",
+        "rows": 1961,
+        "anchors": 1961
+      },
+      {
+        "root": "/kpfs-cognition/baifu/workspace/lingbot-vla-v2/data/open_refrigerator_with_move/20260812_Cognition_Open_refrigerator_with_move_S1_30_1/lerobot_so3_data_30hz",
+        "path": "data/chunk-000/episode_000076.parquet",
+        "rows": 2012,
+        "anchors": 2012
+      },
+      {
+        "root": "/kpfs-cognition/baifu/workspace/lingbot-vla-v2/data/open_refrigerator_with_move/20260812_Cognition_Open_refrigerator_with_move_S1_30_1/lerobot_so3_data_30hz",
+        "path": "data/chunk-000/episode_000077.parquet",
+        "rows": 2041,
+        "anchors": 2041
+      },
+      {
+        "root": "/kpfs-cognition/baifu/workspace/lingbot-vla-v2/data/open_refrigerator_with_move/20260812_Cognition_Open_refrigerator_with_move_S1_30_1/lerobot_so3_data_30hz",
+        "path": "data/chunk-000/episode_000078.parquet",
+        "rows": 2039,
+        "anchors": 2039
+      },
+      {
+        "root": "/kpfs-cognition/baifu/workspace/lingbot-vla-v2/data/open_refrigerator_with_move/20260812_Cognition_Open_refrigerator_with_move_S1_30_1/lerobot_so3_data_30hz",
+        "path": "data/chunk-000/episode_000079.parquet",
+        "rows": 2042,
+        "anchors": 2042
+      },
+      {
+        "root": "/kpfs-cognition/baifu/workspace/lingbot-vla-v2/data/open_refrigerator_with_move/20260812_Cognition_Open_refrigerator_with_move_S1_30_1/lerobot_so3_data_30hz",
+        "path": "data/chunk-000/episode_000080.parquet",
+        "rows": 1981,
+        "anchors": 1981
+      },
+      {
+        "root": "/kpfs-cognition/baifu/workspace/lingbot-vla-v2/data/open_refrigerator_with_move/20260812_Cognition_Open_refrigerator_with_move_S1_30_1/lerobot_so3_data_30hz",
+        "path": "data/chunk-000/episode_000081.parquet",
+        "rows": 1636,
+        "anchors": 1636
+      },
+      {
+        "root": "/kpfs-cognition/baifu/workspace/lingbot-vla-v2/data/open_refrigerator_with_move/20260812_Cognition_Open_refrigerator_with_move_S1_30_1/lerobot_so3_data_30hz",
+        "path": "data/chunk-000/episode_000082.parquet",
+        "rows": 1590,
+        "anchors": 1590
+      },
+      {
+        "root": "/kpfs-cognition/baifu/workspace/lingbot-vla-v2/data/open_refrigerator_with_move/20260812_Cognition_Open_refrigerator_with_move_S1_30_1/lerobot_so3_data_30hz",
+        "path": "data/chunk-000/episode_000083.parquet",
+        "rows": 1892,
+        "anchors": 1892
+      },
+      {
+        "root": "/kpfs-cognition/baifu/workspace/lingbot-vla-v2/data/open_refrigerator_with_move/20260812_Cognition_Open_refrigerator_with_move_S1_30_1/lerobot_so3_data_30hz",
+        "path": "data/chunk-000/episode_000084.parquet",
+        "rows": 1799,
+        "anchors": 1799
+      },
+      {
+        "root": "/kpfs-cognition/baifu/workspace/lingbot-vla-v2/data/open_refrigerator_with_move/20260812_Cognition_Open_refrigerator_with_move_S1_30_1/lerobot_so3_data_30hz",
+        "path": "data/chunk-000/episode_000085.parquet",
+        "rows": 1711,
+        "anchors": 1711
+      },
+      {
+        "root": "/kpfs-cognition/baifu/workspace/lingbot-vla-v2/data/open_refrigerator_with_move/20260812_Cognition_Open_refrigerator_with_move_S1_30_1/lerobot_so3_data_30hz",
+        "path": "data/chunk-000/episode_000086.parquet",
+        "rows": 1651,
+        "anchors": 1651
+      },
+      {
+        "root": "/kpfs-cognition/baifu/workspace/lingbot-vla-v2/data/open_refrigerator_with_move/20260812_Cognition_Open_refrigerator_with_move_S1_30_1/lerobot_so3_data_30hz",
+        "path": "data/chunk-000/episode_000087.parquet",
+        "rows": 1771,
+        "anchors": 1771
+      },
+      {
+        "root": "/kpfs-cognition/baifu/workspace/lingbot-vla-v2/data/open_refrigerator_with_move/20260812_Cognition_Open_refrigerator_with_move_S1_30_1/lerobot_so3_data_30hz",
+        "path": "data/chunk-000/episode_000088.parquet",
+        "rows": 1921,
+        "anchors": 1921
+      },
+      {
+        "root": "/kpfs-cognition/baifu/workspace/lingbot-vla-v2/data/open_refrigerator_with_move/20260812_Cognition_Open_refrigerator_with_move_S1_30_1/lerobot_so3_data_30hz",
+        "path": "data/chunk-000/episode_000089.parquet",
+        "rows": 1708,
+        "anchors": 1708
+      },
+      {
+        "root": "/kpfs-cognition/baifu/workspace/lingbot-vla-v2/data/open_refrigerator_with_move/20260812_Cognition_Open_refrigerator_with_move_S1_30_1/lerobot_so3_data_30hz",
+        "path": "data/chunk-000/episode_000090.parquet",
+        "rows": 1501,
+        "anchors": 1501
+      },
+      {
+        "root": "/kpfs-cognition/baifu/workspace/lingbot-vla-v2/data/open_refrigerator_with_move/20260812_Cognition_Open_refrigerator_with_move_S1_30_1/lerobot_so3_data_30hz",
+        "path": "data/chunk-000/episode_000091.parquet",
+        "rows": 1800,
+        "anchors": 1800
+      },
+      {
+        "root": "/kpfs-cognition/baifu/workspace/lingbot-vla-v2/data/open_refrigerator_with_move/20260812_Cognition_Open_refrigerator_with_move_S1_30_1/lerobot_so3_data_30hz",
+        "path": "data/chunk-000/episode_000092.parquet",
+        "rows": 1740,
+        "anchors": 1740
+      },
+      {
+        "root": "/kpfs-cognition/baifu/workspace/lingbot-vla-v2/data/open_refrigerator_with_move/20260812_Cognition_Open_refrigerator_with_move_S1_30_1/lerobot_so3_data_30hz",
+        "path": "data/chunk-000/episode_000093.parquet",
+        "rows": 1652,
+        "anchors": 1652
+      },
+      {
+        "root": "/kpfs-cognition/baifu/workspace/lingbot-vla-v2/data/open_refrigerator_with_move/20260812_Cognition_Open_refrigerator_with_move_S1_30_1/lerobot_so3_data_30hz",
+        "path": "data/chunk-000/episode_000094.parquet",
+        "rows": 1713,
+        "anchors": 1713
+      },
+      {
+        "root": "/kpfs-cognition/baifu/workspace/lingbot-vla-v2/data/open_refrigerator_with_move/20260812_Cognition_Open_refrigerator_with_move_S1_30_1/lerobot_so3_data_30hz",
+        "path": "data/chunk-000/episode_000095.parquet",
+        "rows": 1591,
+        "anchors": 1591
+      },
+      {
+        "root": "/kpfs-cognition/baifu/workspace/lingbot-vla-v2/data/open_refrigerator_with_move/20260812_Cognition_Open_refrigerator_with_move_S1_30_1/lerobot_so3_data_30hz",
+        "path": "data/chunk-000/episode_000096.parquet",
+        "rows": 1683,
+        "anchors": 1683
+      },
+      {
+        "root": "/kpfs-cognition/baifu/workspace/lingbot-vla-v2/data/open_refrigerator_with_move/20260812_Cognition_Open_refrigerator_with_move_S1_30_1/lerobot_so3_data_30hz",
+        "path": "data/chunk-000/episode_000097.parquet",
+        "rows": 1533,
+        "anchors": 1533
+      },
+      {
+        "root": "/kpfs-cognition/baifu/workspace/lingbot-vla-v2/data/open_refrigerator_with_move/20260812_Cognition_Open_refrigerator_with_move_S1_30_1/lerobot_so3_data_30hz",
+        "path": "data/chunk-000/episode_000098.parquet",
+        "rows": 1563,
+        "anchors": 1563
+      },
+      {
+        "root": "/kpfs-cognition/baifu/workspace/lingbot-vla-v2/data/open_refrigerator_with_move/20260812_Cognition_Open_refrigerator_with_move_S1_30_1/lerobot_so3_data_30hz",
+        "path": "data/chunk-000/episode_000099.parquet",
+        "rows": 1561,
+        "anchors": 1561
+      },
+      {
+        "root": "/kpfs-cognition/baifu/workspace/lingbot-vla-v2/data/open_refrigerator_with_move/20260812_Cognition_Open_refrigerator_with_move_S1_30_1/lerobot_so3_data_30hz",
+        "path": "data/chunk-000/episode_000100.parquet",
+        "rows": 1500,
+        "anchors": 1500
+      },
+      {
+        "root": "/kpfs-cognition/baifu/workspace/lingbot-vla-v2/data/open_refrigerator_with_move/20260812_Cognition_Open_refrigerator_with_move_S1_30_1/lerobot_so3_data_30hz",
+        "path": "data/chunk-000/episode_000101.parquet",
+        "rows": 1561,
+        "anchors": 1561
+      },
+      {
+        "root": "/kpfs-cognition/baifu/workspace/lingbot-vla-v2/data/open_refrigerator_with_move/20260812_Cognition_Open_refrigerator_with_move_S1_30_1/lerobot_so3_data_30hz",
+        "path": "data/chunk-000/episode_000102.parquet",
+        "rows": 1561,
+        "anchors": 1561
+      },
+      {
+        "root": "/kpfs-cognition/baifu/workspace/lingbot-vla-v2/data/open_refrigerator_with_move/20260812_Cognition_Open_refrigerator_with_move_S1_30_1/lerobot_so3_data_30hz",
+        "path": "data/chunk-000/episode_000103.parquet",
+        "rows": 1413,
+        "anchors": 1413
+      },
+      {
+        "root": "/kpfs-cognition/baifu/workspace/lingbot-vla-v2/data/open_refrigerator_with_move/20260812_Cognition_Open_refrigerator_with_move_S1_30_1/lerobot_so3_data_30hz",
+        "path": "data/chunk-000/episode_000104.parquet",
+        "rows": 1530,
+        "anchors": 1530
+      },
+      {
+        "root": "/kpfs-cognition/baifu/workspace/lingbot-vla-v2/data/open_refrigerator_with_move/20260812_Cognition_Open_refrigerator_with_move_S1_30_1/lerobot_so3_data_30hz",
+        "path": "data/chunk-000/episode_000105.parquet",
+        "rows": 1591,
+        "anchors": 1591
+      },
+      {
+        "root": "/kpfs-cognition/baifu/workspace/lingbot-vla-v2/data/open_refrigerator_with_move/20260812_Cognition_Open_refrigerator_with_move_S1_30_1/lerobot_so3_data_30hz",
+        "path": "data/chunk-000/episode_000106.parquet",
+        "rows": 1622,
+        "anchors": 1622
+      },
+      {
+        "root": "/kpfs-cognition/baifu/workspace/lingbot-vla-v2/data/open_refrigerator_with_move/20260812_Cognition_Open_refrigerator_with_move_S1_30_1/lerobot_so3_data_30hz",
+        "path": "data/chunk-000/episode_000107.parquet",
+        "rows": 1560,
+        "anchors": 1560
+      },
+      {
+        "root": "/kpfs-cognition/baifu/workspace/lingbot-vla-v2/data/open_refrigerator_with_move/20260812_Cognition_Open_refrigerator_with_move_S1_30_1/lerobot_so3_data_30hz",
+        "path": "data/chunk-000/episode_000108.parquet",
+        "rows": 1714,
+        "anchors": 1714
+      },
+      {
+        "root": "/kpfs-cognition/baifu/workspace/lingbot-vla-v2/data/open_refrigerator_with_move/20260812_Cognition_Open_refrigerator_with_move_S1_30_1/lerobot_so3_data_30hz",
+        "path": "data/chunk-000/episode_000109.parquet",
+        "rows": 1773,
+        "anchors": 1773
+      },
+      {
+        "root": "/kpfs-cognition/baifu/workspace/lingbot-vla-v2/data/open_refrigerator_with_move/20260812_Cognition_Open_refrigerator_with_move_S1_30_1/lerobot_so3_data_30hz",
+        "path": "data/chunk-000/episode_000110.parquet",
+        "rows": 1743,
+        "anchors": 1743
+      },
+      {
+        "root": "/kpfs-cognition/baifu/workspace/lingbot-vla-v2/data/open_refrigerator_with_move/20260812_Cognition_Open_refrigerator_with_move_S1_30_1/lerobot_so3_data_30hz",
+        "path": "data/chunk-000/episode_000111.parquet",
+        "rows": 1383,
+        "anchors": 1383
+      },
+      {
+        "root": "/kpfs-cognition/baifu/workspace/lingbot-vla-v2/data/open_refrigerator_with_move/20260812_Cognition_Open_refrigerator_with_move_S1_30_1/lerobot_so3_data_30hz",
+        "path": "data/chunk-000/episode_000112.parquet",
+        "rows": 1443,
+        "anchors": 1443
+      },
+      {
+        "root": "/kpfs-cognition/baifu/workspace/lingbot-vla-v2/data/open_refrigerator_with_move/20260812_Cognition_Open_refrigerator_with_move_S1_30_1/lerobot_so3_data_30hz",
+        "path": "data/chunk-000/episode_000113.parquet",
+        "rows": 1713,
+        "anchors": 1713
+      },
+      {
+        "root": "/kpfs-cognition/baifu/workspace/lingbot-vla-v2/data/open_refrigerator_with_move/20260812_Cognition_Open_refrigerator_with_move_S1_30_1/lerobot_so3_data_30hz",
+        "path": "data/chunk-000/episode_000114.parquet",
+        "rows": 1351,
+        "anchors": 1351
+      },
+      {
+        "root": "/kpfs-cognition/baifu/workspace/lingbot-vla-v2/data/open_refrigerator_with_move/20260812_Cognition_Open_refrigerator_with_move_S1_30_1/lerobot_so3_data_30hz",
+        "path": "data/chunk-000/episode_000115.parquet",
+        "rows": 1474,
+        "anchors": 1474
+      },
+      {
+        "root": "/kpfs-cognition/baifu/workspace/lingbot-vla-v2/data/open_refrigerator_with_move/20260812_Cognition_Open_refrigerator_with_move_S1_30_1/lerobot_so3_data_30hz",
+        "path": "data/chunk-000/episode_000116.parquet",
+        "rows": 1471,
+        "anchors": 1471
+      },
+      {
+        "root": "/kpfs-cognition/baifu/workspace/lingbot-vla-v2/data/open_refrigerator_with_move/20260812_Cognition_Open_refrigerator_with_move_S1_30_1/lerobot_so3_data_30hz",
+        "path": "data/chunk-000/episode_000117.parquet",
+        "rows": 1410,
+        "anchors": 1410
+      },
+      {
+        "root": "/kpfs-cognition/baifu/workspace/lingbot-vla-v2/data/open_refrigerator_with_move/20260812_Cognition_Open_refrigerator_with_move_S1_30_1/lerobot_so3_data_30hz",
+        "path": "data/chunk-000/episode_000118.parquet",
+        "rows": 1474,
+        "anchors": 1474
+      },
+      {
+        "root": "/kpfs-cognition/baifu/workspace/lingbot-vla-v2/data/open_refrigerator_with_move/20260812_Cognition_Open_refrigerator_with_move_S1_30_1/lerobot_so3_data_30hz",
+        "path": "data/chunk-000/episode_000119.parquet",
+        "rows": 1291,
+        "anchors": 1291
+      },
+      {
+        "root": "/kpfs-cognition/baifu/workspace/lingbot-vla-v2/data/open_refrigerator_with_move/20260812_Cognition_Open_refrigerator_with_move_S1_30_1/lerobot_so3_data_30hz",
+        "path": "data/chunk-000/episode_000120.parquet",
+        "rows": 1924,
+        "anchors": 1924
+      },
+      {
+        "root": "/kpfs-cognition/baifu/workspace/lingbot-vla-v2/data/open_refrigerator_with_move/20260812_Cognition_Open_refrigerator_with_move_S1_30_1/lerobot_so3_data_30hz",
+        "path": "data/chunk-000/episode_000121.parquet",
+        "rows": 2039,
+        "anchors": 2039
+      },
+      {
+        "root": "/kpfs-cognition/baifu/workspace/lingbot-vla-v2/data/open_refrigerator_with_move/20260812_Cognition_Open_refrigerator_with_move_S1_30_1/lerobot_so3_data_30hz",
+        "path": "data/chunk-000/episode_000122.parquet",
+        "rows": 1916,
+        "anchors": 1916
+      },
+      {
+        "root": "/kpfs-cognition/baifu/workspace/lingbot-vla-v2/data/open_refrigerator_with_move/20260812_Cognition_Open_refrigerator_with_move_S1_30_1/lerobot_so3_data_30hz",
+        "path": "data/chunk-000/episode_000123.parquet",
+        "rows": 1893,
+        "anchors": 1893
+      },
+      {
+        "root": "/kpfs-cognition/baifu/workspace/lingbot-vla-v2/data/open_refrigerator_with_move/20260812_Cognition_Open_refrigerator_with_move_S1_30_1/lerobot_so3_data_30hz",
+        "path": "data/chunk-000/episode_000124.parquet",
+        "rows": 1681,
+        "anchors": 1681
+      },
+      {
+        "root": "/kpfs-cognition/baifu/workspace/lingbot-vla-v2/data/open_refrigerator_with_move/20260812_Cognition_Open_refrigerator_with_move_S1_30_1/lerobot_so3_data_30hz",
+        "path": "data/chunk-000/episode_000125.parquet",
+        "rows": 1800,
+        "anchors": 1800
+      },
+      {
+        "root": "/kpfs-cognition/baifu/workspace/lingbot-vla-v2/data/open_refrigerator_with_move/20260812_Cognition_Open_refrigerator_with_move_S1_30_1/lerobot_so3_data_30hz",
+        "path": "data/chunk-000/episode_000126.parquet",
+        "rows": 1804,
+        "anchors": 1804
+      },
+      {
+        "root": "/kpfs-cognition/baifu/workspace/lingbot-vla-v2/data/open_refrigerator_with_move/20260812_Cognition_Open_refrigerator_with_move_S1_30_1/lerobot_so3_data_30hz",
+        "path": "data/chunk-000/episode_000127.parquet",
+        "rows": 1743,
+        "anchors": 1743
+      },
+      {
+        "root": "/kpfs-cognition/baifu/workspace/lingbot-vla-v2/data/open_refrigerator_with_move/20260812_Cognition_Open_refrigerator_with_move_S1_30_1/lerobot_so3_data_30hz",
+        "path": "data/chunk-000/episode_000128.parquet",
+        "rows": 1774,
+        "anchors": 1774
+      },
+      {
+        "root": "/kpfs-cognition/baifu/workspace/lingbot-vla-v2/data/open_refrigerator_with_move/20260812_Cognition_Open_refrigerator_with_move_S1_30_1/lerobot_so3_data_30hz",
+        "path": "data/chunk-000/episode_000129.parquet",
+        "rows": 1861,
+        "anchors": 1861
+      },
+      {
+        "root": "/kpfs-cognition/baifu/workspace/lingbot-vla-v2/data/open_refrigerator_with_move/20260812_Cognition_Open_refrigerator_with_move_S1_30_1/lerobot_so3_data_30hz",
+        "path": "data/chunk-000/episode_000130.parquet",
+        "rows": 1804,
+        "anchors": 1804
+      },
+      {
+        "root": "/kpfs-cognition/baifu/workspace/lingbot-vla-v2/data/open_refrigerator_with_move/20260812_Cognition_Open_refrigerator_with_move_S1_30_1/lerobot_so3_data_30hz",
+        "path": "data/chunk-000/episode_000131.parquet",
+        "rows": 1685,
+        "anchors": 1685
+      },
+      {
+        "root": "/kpfs-cognition/baifu/workspace/lingbot-vla-v2/data/open_refrigerator_with_move/20260812_Cognition_Open_refrigerator_with_move_S1_30_1/lerobot_so3_data_30hz",
+        "path": "data/chunk-000/episode_000132.parquet",
+        "rows": 1949,
+        "anchors": 1949
+      },
+      {
+        "root": "/kpfs-cognition/baifu/workspace/lingbot-vla-v2/data/open_refrigerator_with_move/20260812_Cognition_Open_refrigerator_with_move_S1_30_1/lerobot_so3_data_30hz",
+        "path": "data/chunk-000/episode_000133.parquet",
+        "rows": 1925,
+        "anchors": 1925
+      },
+      {
+        "root": "/kpfs-cognition/baifu/workspace/lingbot-vla-v2/data/open_refrigerator_with_move/20260812_Cognition_Open_refrigerator_with_move_S1_30_1/lerobot_so3_data_30hz",
+        "path": "data/chunk-000/episode_000134.parquet",
+        "rows": 2015,
+        "anchors": 2015
+      },
+      {
+        "root": "/kpfs-cognition/baifu/workspace/lingbot-vla-v2/data/open_refrigerator_with_move/20260812_Cognition_Open_refrigerator_with_move_S1_30_1/lerobot_so3_data_30hz",
+        "path": "data/chunk-000/episode_000135.parquet",
+        "rows": 1505,
+        "anchors": 1505
+      },
+      {
+        "root": "/kpfs-cognition/baifu/workspace/lingbot-vla-v2/data/open_refrigerator_with_move/20260812_Cognition_Open_refrigerator_with_move_S1_30_1/lerobot_so3_data_30hz",
+        "path": "data/chunk-000/episode_000136.parquet",
+        "rows": 1835,
+        "anchors": 1835
+      },
+      {
+        "root": "/kpfs-cognition/baifu/workspace/lingbot-vla-v2/data/open_refrigerator_with_move/20260812_Cognition_Open_refrigerator_with_move_S1_30_2/lerobot_so3_data_30hz",
+        "path": "data/chunk-000/episode_000000.parquet",
+        "rows": 2371,
+        "anchors": 2371
+      },
+      {
+        "root": "/kpfs-cognition/baifu/workspace/lingbot-vla-v2/data/open_refrigerator_with_move/20260812_Cognition_Open_refrigerator_with_move_S1_30_2/lerobot_so3_data_30hz",
+        "path": "data/chunk-000/episode_000001.parquet",
+        "rows": 2288,
+        "anchors": 2288
+      },
+      {
+        "root": "/kpfs-cognition/baifu/workspace/lingbot-vla-v2/data/open_refrigerator_with_move/20260812_Cognition_Open_refrigerator_with_move_S1_30_2/lerobot_so3_data_30hz",
+        "path": "data/chunk-000/episode_000002.parquet",
+        "rows": 2168,
+        "anchors": 2168
+      },
+      {
+        "root": "/kpfs-cognition/baifu/workspace/lingbot-vla-v2/data/open_refrigerator_with_move/20260812_Cognition_Open_refrigerator_with_move_S1_30_2/lerobot_so3_data_30hz",
+        "path": "data/chunk-000/episode_000003.parquet",
+        "rows": 2287,
+        "anchors": 2287
+      },
+      {
+        "root": "/kpfs-cognition/baifu/workspace/lingbot-vla-v2/data/open_refrigerator_with_move/20260812_Cognition_Open_refrigerator_with_move_S1_30_2/lerobot_so3_data_30hz",
+        "path": "data/chunk-000/episode_000004.parquet",
+        "rows": 2161,
+        "anchors": 2161
+      },
+      {
+        "root": "/kpfs-cognition/baifu/workspace/lingbot-vla-v2/data/open_refrigerator_with_move/20260812_Cognition_Open_refrigerator_with_move_S1_30_2/lerobot_so3_data_30hz",
+        "path": "data/chunk-000/episode_000005.parquet",
+        "rows": 2431,
+        "anchors": 2431
+      },
+      {
+        "root": "/kpfs-cognition/baifu/workspace/lingbot-vla-v2/data/open_refrigerator_with_move/20260812_Cognition_Open_refrigerator_with_move_S1_30_2/lerobot_so3_data_30hz",
+        "path": "data/chunk-000/episode_000006.parquet",
+        "rows": 2461,
+        "anchors": 2461
+      },
+      {
+        "root": "/kpfs-cognition/baifu/workspace/lingbot-vla-v2/data/open_refrigerator_with_move/20260812_Cognition_Open_refrigerator_with_move_S1_30_2/lerobot_so3_data_30hz",
+        "path": "data/chunk-000/episode_000007.parquet",
+        "rows": 2401,
+        "anchors": 2401
+      },
+      {
+        "root": "/kpfs-cognition/baifu/workspace/lingbot-vla-v2/data/open_refrigerator_with_move/20260812_Cognition_Open_refrigerator_with_move_S1_30_2/lerobot_so3_data_30hz",
+        "path": "data/chunk-000/episode_000008.parquet",
+        "rows": 2437,
+        "anchors": 2437
+      },
+      {
+        "root": "/kpfs-cognition/baifu/workspace/lingbot-vla-v2/data/open_refrigerator_with_move/20260812_Cognition_Open_refrigerator_with_move_S1_30_2/lerobot_so3_data_30hz",
+        "path": "data/chunk-000/episode_000009.parquet",
+        "rows": 2525,
+        "anchors": 2525
+      },
+      {
+        "root": "/kpfs-cognition/baifu/workspace/lingbot-vla-v2/data/open_refrigerator_with_move/20260812_Cognition_Open_refrigerator_with_move_S1_30_2/lerobot_so3_data_30hz",
+        "path": "data/chunk-000/episode_000010.parquet",
+        "rows": 2558,
+        "anchors": 2558
+      },
+      {
+        "root": "/kpfs-cognition/baifu/workspace/lingbot-vla-v2/data/open_refrigerator_with_move/20260812_Cognition_Open_refrigerator_with_move_S1_30_2/lerobot_so3_data_30hz",
+        "path": "data/chunk-000/episode_000011.parquet",
+        "rows": 2467,
+        "anchors": 2467
+      },
+      {
+        "root": "/kpfs-cognition/baifu/workspace/lingbot-vla-v2/data/open_refrigerator_with_move/20260812_Cognition_Open_refrigerator_with_move_S1_30_2/lerobot_so3_data_30hz",
+        "path": "data/chunk-000/episode_000012.parquet",
+        "rows": 2588,
+        "anchors": 2588
+      },
+      {
+        "root": "/kpfs-cognition/baifu/workspace/lingbot-vla-v2/data/open_refrigerator_with_move/20260812_Cognition_Open_refrigerator_with_move_S1_30_2/lerobot_so3_data_30hz",
+        "path": "data/chunk-000/episode_000013.parquet",
+        "rows": 2491,
+        "anchors": 2491
+      },
+      {
+        "root": "/kpfs-cognition/baifu/workspace/lingbot-vla-v2/data/open_refrigerator_with_move/20260812_Cognition_Open_refrigerator_with_move_S1_30_2/lerobot_so3_data_30hz",
+        "path": "data/chunk-000/episode_000014.parquet",
+        "rows": 2408,
+        "anchors": 2408
+      },
+      {
+        "root": "/kpfs-cognition/baifu/workspace/lingbot-vla-v2/data/open_refrigerator_with_move/20260812_Cognition_Open_refrigerator_with_move_S1_30_2/lerobot_so3_data_30hz",
+        "path": "data/chunk-000/episode_000015.parquet",
+        "rows": 2499,
+        "anchors": 2499
+      },
+      {
+        "root": "/kpfs-cognition/baifu/workspace/lingbot-vla-v2/data/open_refrigerator_with_move/20260812_Cognition_Open_refrigerator_with_move_S1_30_2/lerobot_so3_data_30hz",
+        "path": "data/chunk-000/episode_000016.parquet",
+        "rows": 2311,
+        "anchors": 2311
+      },
+      {
+        "root": "/kpfs-cognition/baifu/workspace/lingbot-vla-v2/data/open_refrigerator_with_move/20260812_Cognition_Open_refrigerator_with_move_S1_30_2/lerobot_so3_data_30hz",
+        "path": "data/chunk-000/episode_000017.parquet",
+        "rows": 2468,
+        "anchors": 2468
+      },
+      {
+        "root": "/kpfs-cognition/baifu/workspace/lingbot-vla-v2/data/open_refrigerator_with_move/20260812_Cognition_Open_refrigerator_with_move_S1_30_2/lerobot_so3_data_30hz",
+        "path": "data/chunk-000/episode_000018.parquet",
+        "rows": 2340,
+        "anchors": 2340
+      },
+      {
+        "root": "/kpfs-cognition/baifu/workspace/lingbot-vla-v2/data/open_refrigerator_with_move/20260812_Cognition_Open_refrigerator_with_move_S1_30_2/lerobot_so3_data_30hz",
+        "path": "data/chunk-000/episode_000019.parquet",
+        "rows": 2587,
+        "anchors": 2587
+      },
+      {
+        "root": "/kpfs-cognition/baifu/workspace/lingbot-vla-v2/data/open_refrigerator_with_move/20260812_Cognition_Open_refrigerator_with_move_S1_30_2/lerobot_so3_data_30hz",
+        "path": "data/chunk-000/episode_000020.parquet",
+        "rows": 2408,
+        "anchors": 2408
+      },
+      {
+        "root": "/kpfs-cognition/baifu/workspace/lingbot-vla-v2/data/open_refrigerator_with_move/20260812_Cognition_Open_refrigerator_with_move_S1_30_2/lerobot_so3_data_30hz",
+        "path": "data/chunk-000/episode_000021.parquet",
+        "rows": 2318,
+        "anchors": 2318
+      },
+      {
+        "root": "/kpfs-cognition/baifu/workspace/lingbot-vla-v2/data/open_refrigerator_with_move/20260812_Cognition_Open_refrigerator_with_move_S1_30_2/lerobot_so3_data_30hz",
+        "path": "data/chunk-000/episode_000022.parquet",
+        "rows": 2250,
+        "anchors": 2250
+      },
+      {
+        "root": "/kpfs-cognition/baifu/workspace/lingbot-vla-v2/data/open_refrigerator_with_move/20260812_Cognition_Open_refrigerator_with_move_S1_30_2/lerobot_so3_data_30hz",
+        "path": "data/chunk-000/episode_000023.parquet",
+        "rows": 2288,
+        "anchors": 2288
+      },
+      {
+        "root": "/kpfs-cognition/baifu/workspace/lingbot-vla-v2/data/open_refrigerator_with_move/20260812_Cognition_Open_refrigerator_with_move_S1_30_2/lerobot_so3_data_30hz",
+        "path": "data/chunk-000/episode_000024.parquet",
+        "rows": 2438,
+        "anchors": 2438
+      },
+      {
+        "root": "/kpfs-cognition/baifu/workspace/lingbot-vla-v2/data/open_refrigerator_with_move/20260812_Cognition_Open_refrigerator_with_move_S1_30_2/lerobot_so3_data_30hz",
+        "path": "data/chunk-000/episode_000025.parquet",
+        "rows": 2350,
+        "anchors": 2350
+      },
+      {
+        "root": "/kpfs-cognition/baifu/workspace/lingbot-vla-v2/data/open_refrigerator_with_move/20260812_Cognition_Open_refrigerator_with_move_S1_30_2/lerobot_so3_data_30hz",
+        "path": "data/chunk-000/episode_000026.parquet",
+        "rows": 2460,
+        "anchors": 2460
+      },
+      {
+        "root": "/kpfs-cognition/baifu/workspace/lingbot-vla-v2/data/open_refrigerator_with_move/20260812_Cognition_Open_refrigerator_with_move_S1_30_2/lerobot_so3_data_30hz",
+        "path": "data/chunk-000/episode_000027.parquet",
+        "rows": 2520,
+        "anchors": 2520
+      },
+      {
+        "root": "/kpfs-cognition/baifu/workspace/lingbot-vla-v2/data/open_refrigerator_with_move/20260812_Cognition_Open_refrigerator_with_move_S1_30_2/lerobot_so3_data_30hz",
+        "path": "data/chunk-000/episode_000028.parquet",
+        "rows": 2468,
+        "anchors": 2468
+      },
+      {
+        "root": "/kpfs-cognition/baifu/workspace/lingbot-vla-v2/data/open_refrigerator_with_move/20260812_Cognition_Open_refrigerator_with_move_S1_30_2/lerobot_so3_data_30hz",
+        "path": "data/chunk-000/episode_000029.parquet",
+        "rows": 2408,
+        "anchors": 2408
+      },
+      {
+        "root": "/kpfs-cognition/baifu/workspace/lingbot-vla-v2/data/open_refrigerator_with_move/20260812_Cognition_Open_refrigerator_with_move_S1_30_2/lerobot_so3_data_30hz",
+        "path": "data/chunk-000/episode_000030.parquet",
+        "rows": 2310,
+        "anchors": 2310
+      },
+      {
+        "root": "/kpfs-cognition/baifu/workspace/lingbot-vla-v2/data/open_refrigerator_with_move/20260812_Cognition_Open_refrigerator_with_move_S1_30_2/lerobot_so3_data_30hz",
+        "path": "data/chunk-000/episode_000031.parquet",
+        "rows": 2468,
+        "anchors": 2468
+      },
+      {
+        "root": "/kpfs-cognition/baifu/workspace/lingbot-vla-v2/data/open_refrigerator_with_move/20260812_Cognition_Open_refrigerator_with_move_S1_30_2/lerobot_so3_data_30hz",
+        "path": "data/chunk-000/episode_000032.parquet",
+        "rows": 2378,
+        "anchors": 2378
+      },
+      {
+        "root": "/kpfs-cognition/baifu/workspace/lingbot-vla-v2/data/open_refrigerator_with_move/20260812_Cognition_Open_refrigerator_with_move_S1_30_2/lerobot_so3_data_30hz",
+        "path": "data/chunk-000/episode_000033.parquet",
+        "rows": 2318,
+        "anchors": 2318
+      },
+      {
+        "root": "/kpfs-cognition/baifu/workspace/lingbot-vla-v2/data/open_refrigerator_with_move/20260812_Cognition_Open_refrigerator_with_move_S1_30_2/lerobot_so3_data_30hz",
+        "path": "data/chunk-000/episode_000034.parquet",
+        "rows": 2348,
+        "anchors": 2348
+      },
+      {
+        "root": "/kpfs-cognition/baifu/workspace/lingbot-vla-v2/data/open_refrigerator_with_move/20260812_Cognition_Open_refrigerator_with_move_S1_30_2/lerobot_so3_data_30hz",
+        "path": "data/chunk-000/episode_000035.parquet",
+        "rows": 2440,
+        "anchors": 2440
+      },
+      {
+        "root": "/kpfs-cognition/baifu/workspace/lingbot-vla-v2/data/open_refrigerator_with_move/20260812_Cognition_Open_refrigerator_with_move_S1_30_2/lerobot_so3_data_30hz",
+        "path": "data/chunk-000/episode_000036.parquet",
+        "rows": 2290,
+        "anchors": 2290
+      },
+      {
+        "root": "/kpfs-cognition/baifu/workspace/lingbot-vla-v2/data/open_refrigerator_with_move/20260812_Cognition_Open_refrigerator_with_move_S1_30_2/lerobot_so3_data_30hz",
+        "path": "data/chunk-000/episode_000037.parquet",
+        "rows": 2432,
+        "anchors": 2432
+      },
+      {
+        "root": "/kpfs-cognition/baifu/workspace/lingbot-vla-v2/data/open_refrigerator_with_move/20260812_Cognition_Open_refrigerator_with_move_S1_30_2/lerobot_so3_data_30hz",
+        "path": "data/chunk-000/episode_000038.parquet",
+        "rows": 2349,
+        "anchors": 2349
+      },
+      {
+        "root": "/kpfs-cognition/baifu/workspace/lingbot-vla-v2/data/open_refrigerator_with_move/20260812_Cognition_Open_refrigerator_with_move_S1_30_2/lerobot_so3_data_30hz",
+        "path": "data/chunk-000/episode_000039.parquet",
+        "rows": 2348,
+        "anchors": 2348
+      },
+      {
+        "root": "/kpfs-cognition/baifu/workspace/lingbot-vla-v2/data/open_refrigerator_with_move/20260812_Cognition_Open_refrigerator_with_move_S1_30_2/lerobot_so3_data_30hz",
+        "path": "data/chunk-000/episode_000040.parquet",
+        "rows": 2079,
+        "anchors": 2079
+      },
+      {
+        "root": "/kpfs-cognition/baifu/workspace/lingbot-vla-v2/data/open_refrigerator_with_move/20260812_Cognition_Open_refrigerator_with_move_S1_30_2/lerobot_so3_data_30hz",
+        "path": "data/chunk-000/episode_000041.parquet",
+        "rows": 2259,
+        "anchors": 2259
+      },
+      {
+        "root": "/kpfs-cognition/baifu/workspace/lingbot-vla-v2/data/open_refrigerator_with_move/20260812_Cognition_Open_refrigerator_with_move_S1_30_2/lerobot_so3_data_30hz",
+        "path": "data/chunk-000/episode_000042.parquet",
+        "rows": 2319,
+        "anchors": 2319
+      },
+      {
+        "root": "/kpfs-cognition/baifu/workspace/lingbot-vla-v2/data/open_refrigerator_with_move/20260812_Cognition_Open_refrigerator_with_move_S1_30_2/lerobot_so3_data_30hz",
+        "path": "data/chunk-000/episode_000043.parquet",
+        "rows": 2110,
+        "anchors": 2110
+      },
+      {
+        "root": "/kpfs-cognition/baifu/workspace/lingbot-vla-v2/data/open_refrigerator_with_move/20260812_Cognition_Open_refrigerator_with_move_S1_30_2/lerobot_so3_data_30hz",
+        "path": "data/chunk-000/episode_000044.parquet",
+        "rows": 2229,
+        "anchors": 2229
+      },
+      {
+        "root": "/kpfs-cognition/baifu/workspace/lingbot-vla-v2/data/open_refrigerator_with_move/20260812_Cognition_Open_refrigerator_with_move_S1_30_2/lerobot_so3_data_30hz",
+        "path": "data/chunk-000/episode_000045.parquet",
+        "rows": 2161,
+        "anchors": 2161
+      },
+      {
+        "root": "/kpfs-cognition/baifu/workspace/lingbot-vla-v2/data/open_refrigerator_with_move/20260812_Cognition_Open_refrigerator_with_move_S1_30_2/lerobot_so3_data_30hz",
+        "path": "data/chunk-000/episode_000046.parquet",
+        "rows": 2229,
+        "anchors": 2229
+      },
+      {
+        "root": "/kpfs-cognition/baifu/workspace/lingbot-vla-v2/data/open_refrigerator_with_move/20260812_Cognition_Open_refrigerator_with_move_S1_30_2/lerobot_so3_data_30hz",
+        "path": "data/chunk-000/episode_000047.parquet",
+        "rows": 2290,
+        "anchors": 2290
+      },
+      {
+        "root": "/kpfs-cognition/baifu/workspace/lingbot-vla-v2/data/open_refrigerator_with_move/20260812_Cognition_Open_refrigerator_with_move_S1_30_2/lerobot_so3_data_30hz",
+        "path": "data/chunk-000/episode_000048.parquet",
+        "rows": 2191,
+        "anchors": 2191
+      },
+      {
+        "root": "/kpfs-cognition/baifu/workspace/lingbot-vla-v2/data/open_refrigerator_with_move/20260812_Cognition_Open_refrigerator_with_move_S1_30_2/lerobot_so3_data_30hz",
+        "path": "data/chunk-000/episode_000049.parquet",
+        "rows": 2311,
+        "anchors": 2311
+      },
+      {
+        "root": "/kpfs-cognition/baifu/workspace/lingbot-vla-v2/data/open_refrigerator_with_move/20260812_Cognition_Open_refrigerator_with_move_S1_30_2/lerobot_so3_data_30hz",
+        "path": "data/chunk-000/episode_000050.parquet",
+        "rows": 2170,
+        "anchors": 2170
+      },
+      {
+        "root": "/kpfs-cognition/baifu/workspace/lingbot-vla-v2/data/open_refrigerator_with_move/20260812_Cognition_Open_refrigerator_with_move_S1_30_2/lerobot_so3_data_30hz",
+        "path": "data/chunk-000/episode_000051.parquet",
+        "rows": 2200,
+        "anchors": 2200
+      },
+      {
+        "root": "/kpfs-cognition/baifu/workspace/lingbot-vla-v2/data/open_refrigerator_with_move/20260812_Cognition_Open_refrigerator_with_move_S1_30_2/lerobot_so3_data_30hz",
+        "path": "data/chunk-000/episode_000052.parquet",
+        "rows": 2260,
+        "anchors": 2260
+      },
+      {
+        "root": "/kpfs-cognition/baifu/workspace/lingbot-vla-v2/data/open_refrigerator_with_move/20260812_Cognition_Open_refrigerator_with_move_S1_30_2/lerobot_so3_data_30hz",
+        "path": "data/chunk-000/episode_000053.parquet",
+        "rows": 2200,
+        "anchors": 2200
+      },
+      {
+        "root": "/kpfs-cognition/baifu/workspace/lingbot-vla-v2/data/open_refrigerator_with_move/20260812_Cognition_Open_refrigerator_with_move_S1_30_2/lerobot_so3_data_30hz",
+        "path": "data/chunk-000/episode_000054.parquet",
+        "rows": 2230,
+        "anchors": 2230
+      },
+      {
+        "root": "/kpfs-cognition/baifu/workspace/lingbot-vla-v2/data/open_refrigerator_with_move/20260812_Cognition_Open_refrigerator_with_move_S1_30_2/lerobot_so3_data_30hz",
+        "path": "data/chunk-000/episode_000055.parquet",
+        "rows": 2291,
+        "anchors": 2291
+      },
+      {
+        "root": "/kpfs-cognition/baifu/workspace/lingbot-vla-v2/data/open_refrigerator_with_move/20260812_Cognition_Open_refrigerator_with_move_S1_30_2/lerobot_so3_data_30hz",
+        "path": "data/chunk-000/episode_000056.parquet",
+        "rows": 2191,
+        "anchors": 2191
+      },
+      {
+        "root": "/kpfs-cognition/baifu/workspace/lingbot-vla-v2/data/open_refrigerator_with_move/20260812_Cognition_Open_refrigerator_with_move_S1_30_2/lerobot_so3_data_30hz",
+        "path": "data/chunk-000/episode_000057.parquet",
+        "rows": 2350,
+        "anchors": 2350
+      },
+      {
+        "root": "/kpfs-cognition/baifu/workspace/lingbot-vla-v2/data/open_refrigerator_with_move/20260812_Cognition_Open_refrigerator_with_move_S1_30_2/lerobot_so3_data_30hz",
+        "path": "data/chunk-000/episode_000058.parquet",
+        "rows": 2141,
+        "anchors": 2141
+      },
+      {
+        "root": "/kpfs-cognition/baifu/workspace/lingbot-vla-v2/data/open_refrigerator_with_move/20260812_Cognition_Open_refrigerator_with_move_S1_30_2/lerobot_so3_data_30hz",
+        "path": "data/chunk-000/episode_000059.parquet",
+        "rows": 2320,
+        "anchors": 2320
+      },
+      {
+        "root": "/kpfs-cognition/baifu/workspace/lingbot-vla-v2/data/open_refrigerator_with_move/20260812_Cognition_Open_refrigerator_with_move_S1_30_2/lerobot_so3_data_30hz",
+        "path": "data/chunk-000/episode_000060.parquet",
+        "rows": 2399,
+        "anchors": 2399
+      },
+      {
+        "root": "/kpfs-cognition/baifu/workspace/lingbot-vla-v2/data/open_refrigerator_with_move/20260812_Cognition_Open_refrigerator_with_move_S1_30_2/lerobot_so3_data_30hz",
+        "path": "data/chunk-000/episode_000061.parquet",
+        "rows": 2579,
+        "anchors": 2579
+      },
+      {
+        "root": "/kpfs-cognition/baifu/workspace/lingbot-vla-v2/data/open_refrigerator_with_move/20260812_Cognition_Open_refrigerator_with_move_S1_30_2/lerobot_so3_data_30hz",
+        "path": "data/chunk-000/episode_000062.parquet",
+        "rows": 2520,
+        "anchors": 2520
+      },
+      {
+        "root": "/kpfs-cognition/baifu/workspace/lingbot-vla-v2/data/open_refrigerator_with_move/20260812_Cognition_Open_refrigerator_with_move_S1_30_2/lerobot_so3_data_30hz",
+        "path": "data/chunk-000/episode_000063.parquet",
+        "rows": 2069,
+        "anchors": 2069
+      },
+      {
+        "root": "/kpfs-cognition/baifu/workspace/lingbot-vla-v2/data/open_refrigerator_with_move/20260812_Cognition_Open_refrigerator_with_move_S1_30_2/lerobot_so3_data_30hz",
+        "path": "data/chunk-000/episode_000064.parquet",
+        "rows": 2430,
+        "anchors": 2430
+      },
+      {
+        "root": "/kpfs-cognition/baifu/workspace/lingbot-vla-v2/data/open_refrigerator_with_move/20260812_Cognition_Open_refrigerator_with_move_S1_30_2/lerobot_so3_data_30hz",
+        "path": "data/chunk-000/episode_000065.parquet",
+        "rows": 2580,
+        "anchors": 2580
+      },
+      {
+        "root": "/kpfs-cognition/baifu/workspace/lingbot-vla-v2/data/open_refrigerator_with_move/20260812_Cognition_Open_refrigerator_with_move_S1_30_2/lerobot_so3_data_30hz",
+        "path": "data/chunk-000/episode_000066.parquet",
+        "rows": 2490,
+        "anchors": 2490
+      },
+      {
+        "root": "/kpfs-cognition/baifu/workspace/lingbot-vla-v2/data/open_refrigerator_with_move/20260812_Cognition_Open_refrigerator_with_move_S1_30_2/lerobot_so3_data_30hz",
+        "path": "data/chunk-000/episode_000067.parquet",
+        "rows": 2609,
+        "anchors": 2609
+      },
+      {
+        "root": "/kpfs-cognition/baifu/workspace/lingbot-vla-v2/data/open_refrigerator_with_move/20260812_Cognition_Open_refrigerator_with_move_S1_30_2/lerobot_so3_data_30hz",
+        "path": "data/chunk-000/episode_000068.parquet",
+        "rows": 2730,
+        "anchors": 2730
+      },
+      {
+        "root": "/kpfs-cognition/baifu/workspace/lingbot-vla-v2/data/open_refrigerator_with_move/20260812_Cognition_Open_refrigerator_with_move_S1_30_2/lerobot_so3_data_30hz",
+        "path": "data/chunk-000/episode_000069.parquet",
+        "rows": 2399,
+        "anchors": 2399
+      },
+      {
+        "root": "/kpfs-cognition/baifu/workspace/lingbot-vla-v2/data/open_refrigerator_with_move/20260812_Cognition_Open_refrigerator_with_move_S1_30_2/lerobot_so3_data_30hz",
+        "path": "data/chunk-000/episode_000070.parquet",
+        "rows": 2520,
+        "anchors": 2520
+      },
+      {
+        "root": "/kpfs-cognition/baifu/workspace/lingbot-vla-v2/data/open_refrigerator_with_move/20260812_Cognition_Open_refrigerator_with_move_S1_30_2/lerobot_so3_data_30hz",
+        "path": "data/chunk-000/episode_000071.parquet",
+        "rows": 2371,
+        "anchors": 2371
+      },
+      {
+        "root": "/kpfs-cognition/baifu/workspace/lingbot-vla-v2/data/open_refrigerator_with_move/20260812_Cognition_Open_refrigerator_with_move_S1_30_2/lerobot_so3_data_30hz",
+        "path": "data/chunk-000/episode_000072.parquet",
+        "rows": 2400,
+        "anchors": 2400
+      },
+      {
+        "root": "/kpfs-cognition/baifu/workspace/lingbot-vla-v2/data/open_refrigerator_with_move/20260812_Cognition_Open_refrigerator_with_move_S1_30_2/lerobot_so3_data_30hz",
+        "path": "data/chunk-000/episode_000073.parquet",
+        "rows": 2369,
+        "anchors": 2369
+      },
+      {
+        "root": "/kpfs-cognition/baifu/workspace/lingbot-vla-v2/data/open_refrigerator_with_move/20260812_Cognition_Open_refrigerator_with_move_S1_30_2/lerobot_so3_data_30hz",
+        "path": "data/chunk-000/episode_000074.parquet",
+        "rows": 2339,
+        "anchors": 2339
+      },
+      {
+        "root": "/kpfs-cognition/baifu/workspace/lingbot-vla-v2/data/open_refrigerator_with_move/20260812_Cognition_Open_refrigerator_with_move_S1_30_2/lerobot_so3_data_30hz",
+        "path": "data/chunk-000/episode_000075.parquet",
+        "rows": 2186,
+        "anchors": 2186
+      },
+      {
+        "root": "/kpfs-cognition/baifu/workspace/lingbot-vla-v2/data/open_refrigerator_with_move/20260812_Cognition_Open_refrigerator_with_move_S1_30_2/lerobot_so3_data_30hz",
+        "path": "data/chunk-000/episode_000076.parquet",
+        "rows": 2101,
+        "anchors": 2101
+      },
+      {
+        "root": "/kpfs-cognition/baifu/workspace/lingbot-vla-v2/data/open_refrigerator_with_move/20260812_Cognition_Open_refrigerator_with_move_S1_30_2/lerobot_so3_data_30hz",
+        "path": "data/chunk-000/episode_000077.parquet",
+        "rows": 2100,
+        "anchors": 2100
+      },
+      {
+        "root": "/kpfs-cognition/baifu/workspace/lingbot-vla-v2/data/open_refrigerator_with_move/20260812_Cognition_Open_refrigerator_with_move_S1_30_2/lerobot_so3_data_30hz",
+        "path": "data/chunk-000/episode_000078.parquet",
+        "rows": 2100,
+        "anchors": 2100
+      },
+      {
+        "root": "/kpfs-cognition/baifu/workspace/lingbot-vla-v2/data/open_refrigerator_with_move/20260812_Cognition_Open_refrigerator_with_move_S1_30_2/lerobot_so3_data_30hz",
+        "path": "data/chunk-000/episode_000079.parquet",
+        "rows": 2312,
+        "anchors": 2312
+      },
+      {
+        "root": "/kpfs-cognition/baifu/workspace/lingbot-vla-v2/data/open_refrigerator_with_move/20260812_Cognition_Open_refrigerator_with_move_S1_30_2/lerobot_so3_data_30hz",
+        "path": "data/chunk-000/episode_000080.parquet",
+        "rows": 2309,
+        "anchors": 2309
+      },
+      {
+        "root": "/kpfs-cognition/baifu/workspace/lingbot-vla-v2/data/open_refrigerator_with_move/20260812_Cognition_Open_refrigerator_with_move_S1_30_2/lerobot_so3_data_30hz",
+        "path": "data/chunk-000/episode_000081.parquet",
+        "rows": 2401,
+        "anchors": 2401
+      },
+      {
+        "root": "/kpfs-cognition/baifu/workspace/lingbot-vla-v2/data/open_refrigerator_with_move/20260812_Cognition_Open_refrigerator_with_move_S1_30_2/lerobot_so3_data_30hz",
+        "path": "data/chunk-000/episode_000082.parquet",
+        "rows": 2222,
+        "anchors": 2222
+      },
+      {
+        "root": "/kpfs-cognition/baifu/workspace/lingbot-vla-v2/data/open_refrigerator_with_move/20260812_Cognition_Open_refrigerator_with_move_S1_30_2/lerobot_so3_data_30hz",
+        "path": "data/chunk-000/episode_000083.parquet",
+        "rows": 2100,
+        "anchors": 2100
+      },
+      {
+        "root": "/kpfs-cognition/baifu/workspace/lingbot-vla-v2/data/open_refrigerator_with_move/20260812_Cognition_Open_refrigerator_with_move_S1_30_2/lerobot_so3_data_30hz",
+        "path": "data/chunk-000/episode_000084.parquet",
+        "rows": 2249,
+        "anchors": 2249
+      },
+      {
+        "root": "/kpfs-cognition/baifu/workspace/lingbot-vla-v2/data/open_refrigerator_with_move/20260812_Cognition_Open_refrigerator_with_move_S1_30_2/lerobot_so3_data_30hz",
+        "path": "data/chunk-000/episode_000085.parquet",
+        "rows": 2038,
+        "anchors": 2038
+      },
+      {
+        "root": "/kpfs-cognition/baifu/workspace/lingbot-vla-v2/data/open_refrigerator_with_move/20260812_Cognition_Open_refrigerator_with_move_S1_30_2/lerobot_so3_data_30hz",
+        "path": "data/chunk-000/episode_000086.parquet",
+        "rows": 1858,
+        "anchors": 1858
+      },
+      {
+        "root": "/kpfs-cognition/baifu/workspace/lingbot-vla-v2/data/open_refrigerator_with_move/20260812_Cognition_Open_refrigerator_with_move_S1_30_2/lerobot_so3_data_30hz",
+        "path": "data/chunk-000/episode_000087.parquet",
+        "rows": 2100,
+        "anchors": 2100
+      },
+      {
+        "root": "/kpfs-cognition/baifu/workspace/lingbot-vla-v2/data/open_refrigerator_with_move/20260812_Cognition_Open_refrigerator_with_move_S1_30_2/lerobot_so3_data_30hz",
+        "path": "data/chunk-000/episode_000088.parquet",
+        "rows": 2309,
+        "anchors": 2309
+      }
+    ]
+  }
+}
