@@ -89,30 +89,36 @@ run identifiers differ to select the corresponding robot configuration and
 keep outputs separate. No projection weights are permuted between runs: this
 comparison measures how each layout adapts from the existing initialization.
 
-Run one version on each of two separate nodes. The commands below assume eight
-GPUs on each node; the second node and its GPU count still need confirmation.
-With eight GPUs, both use a global batch of 64
-(`8 microbatch × 8 GPUs × 1 accumulation`). If the confirmed GPU count differs,
-adjust accumulation or microbatch consistently before launching either run.
+Run one version on each of two separate nodes. The 2026-09-24 experiment uses
+`10.2.14.189` for mapped and `10.2.35.154` for sequential; both were verified to
+have eight H100 80GB GPUs. Both use seed 42 and a global batch of 64
+(`8 microbatch × 8 GPUs × 1 accumulation`). W&B runs offline, with local
+TensorBoard and stdout metrics also available.
+
+The shared `.venv` still depends on a node-local Python interpreter at
+`/root/.local/share/uv/python/cpython-3.12.11-linux-x86_64-gnu`. On the new node,
+that same interpreter was copied from the existing node, and the FFmpeg 4
+runtime packages `libavdevice58` and `libavfilter7` were installed. CUDA,
+FlashAttention and actual LeRobot video decoding passed before launch.
 
 On the node assigned to the mapped version:
 
 ```bash
-OMP_NUM_THREADS=1 .venv/bin/torchrun \
+OMP_NUM_THREADS=1 WANDB_MODE=offline .venv/bin/torchrun \
   --nnodes=1 --nproc-per-node=8 --master-port=62620 \
   tasks/vla/train_lingbotvla.py \
   configs/vla/s1_fridge_pi05/s1_fridge_pi05.yaml \
-  --train.gradient_accumulation_steps 1
+  --train.gradient_accumulation_steps 1 --train.seed 42
 ```
 
 On the other node assigned to the sequential version:
 
 ```bash
-OMP_NUM_THREADS=1 .venv/bin/torchrun \
+OMP_NUM_THREADS=1 WANDB_MODE=offline .venv/bin/torchrun \
   --nnodes=1 --nproc-per-node=8 --master-port=62620 \
   tasks/vla/train_lingbotvla.py \
   configs/vla/s1_fridge_pi05/s1_fridge_pi05_sequential.yaml \
-  --train.gradient_accumulation_steps 1
+  --train.gradient_accumulation_steps 1 --train.seed 42
 ```
 
 The shared normalization makes physical action losses comparable in scale.
